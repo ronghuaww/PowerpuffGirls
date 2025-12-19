@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b6df2dbf89b3ed11332984e5b7fbe79, type: 3}
-  m_Name: Flour
+  m_Name: Chocolate
   m_EditorClassIdentifier: 
   _script: {fileID: -974389366465450183, guid: f1b2f20e42443e04a9ed989be1a0beac, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: Flour
-  m_icon: {fileID: 21300000, guid: 0cad0ffd2565f4ae4aec883aedb0b40b, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: a90ebd03439e74bd5b03aa74d3259770, type: 3}
+  m_name: Chocolate
+  m_icon: {fileID: 21300000, guid: ac28d0b61d6ec4c6d9b7bef9941ef941, type: 3}
+  m_prefab: {fileID: 0}
   references:
     version: 2
     RefIds: []
