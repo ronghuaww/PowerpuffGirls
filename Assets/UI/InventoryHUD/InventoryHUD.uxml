@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:hr="Highrise.UI"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+  <hr:UILuaView class="inventory-hud" picking-mode="Ignore">
+
+    <!-- Inventory Panel at Bottom -->
+    <VisualElement class="inventory-panel">
+
+      <!-- Horizontal Scroll Container -->
+      <hr:UIScrollView name="_inventoryScroll" class="inventory-scroll" mode="Horizontal">
+        <VisualElement name="_inventoryContainer" class="inventory-container"/>
+      </hr:UIScrollView>
+    </VisualElement>
+
+  </hr:UILuaView>
+</UXML>

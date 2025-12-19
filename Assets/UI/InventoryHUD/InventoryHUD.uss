@@ -1,0 +1,107 @@
+.inventory-hud {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+.inventory-panel {
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 15px;
+  padding: 12px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.inventory-title {
+  font-size: 14px;
+  color: #AAAAAA;
+  margin-bottom: 8px;
+  -unity-text-align: upper-left;
+}
+
+.inventory-scroll {
+  height: 80px;
+  width: 100%;
+  overflow: scroll;
+  white-space: nowrap;
+
+}
+
+.inventory-container {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 4px;
+  width: auto;
+  height: 100%;
+}
+
+/* Ingredient Slot */
+.ingredient-slot {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  margin-right: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ingredient-slot:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.ingredient-slot-selected {
+  border-width: 3px;
+  border-color: #FFD700;
+  background-color: rgba(255, 215, 0, 0.2);
+}
+
+.ingredient-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.ingredient-label {
+  font-size: 18px;
+  color: white;
+  -unity-font-style: bold;
+  -unity-text-align: middle-center;
+}
+
+/* Ingredient Colors */
+.ingredient-flour {
+  background-color: rgba(245, 222, 179, 0.8);
+}
+
+.ingredient-sugar {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.ingredient-butter {
+  background-color: rgba(255, 250, 205, 0.8);
+}
+
+.ingredient-eggs {
+  background-color: rgba(255, 228, 181, 0.8);
+}
+
+.ingredient-milk {
+  background-color: rgba(240, 248, 255, 0.8);
+}
+
+.ingredient-chocolate {
+  background-color: rgba(139, 69, 19, 0.8);
+}
+
+/* Empty slot indicator */
+.ingredient-slot-empty {
+  background-color: rgba(100, 100, 100, 0.3);
+  border-width: 2px;
+  border-color: rgba(150, 150, 150, 0.5);
+}

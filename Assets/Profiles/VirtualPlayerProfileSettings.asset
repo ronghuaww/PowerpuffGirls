@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isSubscriber: 0
   _isAgeVerifiedAbove18: 0
-  _virtualPlayerProfiles: []
+  _virtualPlayerProfiles:
+  - {fileID: 11400000, guid: 2d44f77d0bcfa4b43ab865cc42c1c499, type: 2}
