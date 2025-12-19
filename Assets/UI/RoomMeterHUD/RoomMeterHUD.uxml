@@ -10,7 +10,7 @@
 
     <!-- Meter Container (Top Right) -->
     <VisualElement class="meter-container" picking-mode="Ignore">
-      <Label name="_meterLabel" text="Room Meter" class="meter-label"/>
+      <Label name="_meterLabel" text="Cafe Popularity" class="meter-label"/>
       
       <!-- Vertical Bar with Sections -->
       <VisualElement class="meter-bar-wrapper">

@@ -19,6 +19,7 @@ MonoBehaviour:
   m_ingredients:
   - {fileID: 11400000, guid: e46b253cee3d157438b46574821321e7, type: 2}
   - {fileID: 11400000, guid: cd692e8f6ba2fed46b38384df927a043, type: 2}
+  m_icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   m_prefab: {fileID: 919132149155446097, guid: 3d25c03f3030b4aa289897ecd7537827, type: 3}
   references:
     version: 2

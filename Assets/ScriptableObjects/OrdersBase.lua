@@ -7,6 +7,9 @@ local name: string = ""
 local ingredients: {IngredientsBase} = {}
 
 --!SerializeField
+local icon: Sprite = nil
+
+--!SerializeField
 local prefab: GameObject = nil
 
 
@@ -20,4 +23,8 @@ end
 
 function GetPrefab(): GameObject
     return prefab
+end
+
+function GetIcon(): Sprite
+    return icon
 end

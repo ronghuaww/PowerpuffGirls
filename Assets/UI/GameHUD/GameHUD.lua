@@ -11,6 +11,7 @@ local IngredientSlotSelectedClass = "ingredient-slot-selected"
 local IngredientLabelClass = "ingredient-label"
 local PlayerItemClass = "player-item"
 local PlayerNameClass = "player-name"
+local OrderIconsClass = "order-icons"
 
 --------------------------------
 ---- UXML ELEMENT BINDINGS -----
@@ -83,6 +84,21 @@ local function addOrderDisplay(recipeName: string, ingredients: {string})
     _orderItem:Add(_nameLabel)
     print("Adding order display for: " .. #ingredients .. " ingredients")
 
+    -- order icon
+    local _orderIcon = Image.new()
+    local orderData = ordersManager.getOrderByName(recipeName)
+    if orderData == nil then return end
+    _orderIcon.image = orderData.GetIcon().texture
+    _orderIcon:AddToClassList(OrderIconsClass)
+    _orderItem:Add(_orderIcon)
+
+    -- dash 
+    local _dashLabel = Label.new()
+    _dashLabel:AddToClassList(OrderLabelClass)
+    _dashLabel.text = "----"
+    _orderItem:Add(_dashLabel)
+
+
     -- Ingredients list
     if ingredients and #ingredients > 0 then
         
@@ -97,11 +113,12 @@ local function addOrderDisplay(recipeName: string, ingredients: {string})
 
             local _ingredientIcon = UIImage.new()
             _ingredientIcon.image = ingredientData.GetIcon().texture
+            _ingredientIcon:AddToClassList(OrderIconsClass)
             _orderItem:Add(_ingredientIcon)
 
-            _ingredientsLabel:AddToClassList("order-ingredients")
-            _ingredientsLabel.text = ingredient
-            _orderItem:Add(_ingredientsLabel)
+            -- _ingredientsLabel:AddToClassList("order-ingredients")
+            -- _ingredientsLabel.text = ingredient
+            -- _orderItem:Add(_ingredientsLabel)
         end
 
     end

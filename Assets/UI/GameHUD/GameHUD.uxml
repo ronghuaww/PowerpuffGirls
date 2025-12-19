@@ -23,7 +23,6 @@
 
     <!-- Orders Panel (Left Side) -->
     <VisualElement class="orders-panel" picking-mode="Ignore">
-      <Label text="My Order" class="panel-title"/>
       <VisualElement name="_ordersContainer" class="orders-container" picking-mode="Ignore"/>
     </VisualElement>
 
