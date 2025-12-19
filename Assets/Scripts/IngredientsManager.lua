@@ -6,9 +6,12 @@ local ordersManager = require("OrdersManager")
 AddHeldItemRequest = Event.new("AddHeldItemRequest")
 AddSelectedItemRequest = Event.new("AddSelectedItemRequest")
 AddItemInventoryRequest = Event.new("AddItemInventoryRequest")
+IsOrderCompletedRequest = Event.new("IsOrderCompletedRequest")
+
 local AddHeldItemEvent = Event.new("AddHeldItemEvent")
 local RemoveAllHeldItemsEvent = Event.new("RemoveAllHeldItemsEvent")
 local RemoveHeldItemEvent = Event.new("RemoveHeldItemEvent")
+local SendIngredientToPlayerEvent = Event.new("SendIngredientToPlayerEvent")
 
 --ClIENT-SIDE FUNCTION TO SPAWN HELD ITEM
 function SpawnIngredient(ingredientBase: IngredientsBase, player: Player, itemIndex: number)
@@ -20,6 +23,58 @@ function SpawnIngredient(ingredientBase: IngredientsBase, player: Player, itemIn
         ingredientInstance.transform.parent = player.character.transform
     end
 end
+
+--------------------------------
+------  SEND INGREDIENT    ------
+--------------------------------
+function SendIngredientToPlayer(ingredientName: string, playerSent: Player, playerReceive: Player)
+    -- Get ingredient data
+    local _ingredientData = ordersManager.getIngredientByName(ingredientName)
+    if not _ingredientData then
+        print("ERROR: Ingredient not found: " .. ingredientName)
+        return
+    end
+
+    -- Get prefab
+    local _prefab = _ingredientData.GetPrefab()
+    if not _prefab then
+        print("ERROR: No prefab for ingredient: " .. ingredientName)
+        return
+    end
+
+    -- Get start and end positions from player characters
+    if not playerSent.character or not playerReceive.character then
+        print("ERROR: Player character not found")
+        return
+    end
+
+    local _startPos = playerSent.character.transform.position + Vector3.new(0, 2, 0)
+    local _endPos = playerReceive.character.transform.position + Vector3.new(0, 2, 0)
+
+    -- Spawn the ingredient object
+    local _spawnedObject = Object.Instantiate(_prefab, _startPos, Quaternion.identity)
+
+    -- Tween with arc using sin curve
+    Tween.FromTo(0, 1, function(progress)
+        if _spawnedObject and _spawnedObject.transform then
+            local currentPos = Vector3.Lerp(_startPos, _endPos, progress)
+            -- Add arc height using sin curve
+            local arcHeight = 3.0 * math.sin(progress * math.pi)
+            _spawnedObject.transform.position = currentPos + Vector3.new(0, arcHeight, 0)
+        end
+    end)
+    :Duration(1.0)
+    :EaseInOutQuadratic()
+    :OnStop(function()
+        if _spawnedObject then
+            Object.Destroy(_spawnedObject)
+        end
+    end)
+    :Play()
+
+    print("Sending " .. ingredientName .. " from " .. playerSent.name .. " to " .. playerReceive.name)
+end
+
 
 function self:ClientAwake()
     -- Client-side initialization if needed
@@ -60,6 +115,10 @@ function self:ClientAwake()
         end
     end)
 
+    SendIngredientToPlayerEvent:Connect(function(ingredientName: string, playerSent: Player, playerReceive: Player)
+        SendIngredientToPlayer(ingredientName, playerSent, playerReceive)
+    end)
+
 end
 
 function self:ServerAwake()
@@ -81,26 +140,28 @@ function self:ServerAwake()
             playerTracker.AddHeldItem(player, itemName)
             local heldItems = playerTracker.GetPlayerHeldItems(player)
             AddHeldItemEvent:FireAllClients(player, itemName, #heldItems)
-
-
-            local ifOrderCompleted = ordersManager.checkOrderCompleted(player)
-            if ifOrderCompleted then
-                print("Player " .. player.name .. " has completed their order!")
-                Timer.After(0.5, function()
-                    playerTracker.players[player].heldItems.value = {}
-
-
-                    RemoveAllHeldItemsEvent:FireAllClients(player)
-                    ordersManager.orderRemovedEvent:FireClient(player)
-                    Timer.After(1.0, function()
-                        ordersManager.AssignOrderToPlayer(player)
-                    end)
-                end)
-                
-                -- Further logic for order completion can be added here
-            end
         end
     end)
+
+    IsOrderCompletedRequest:Connect(function(player: Player)
+        local ifOrderCompleted = ordersManager.checkOrderCompleted(player)
+        if ifOrderCompleted then
+            print("Player " .. player.name .. " has completed their order!")
+            Timer.After(0.5, function()
+                playerTracker.players[player].heldItems.value = {}
+
+
+                RemoveAllHeldItemsEvent:FireAllClients(player)
+                local playerOrder = playerTracker.players[player].order.value
+                ordersManager.orderRemovedEvent:FireAllClients(player, playerOrder)
+                Timer.After(1.0, function()
+                    ordersManager.AssignOrderToPlayer(player)
+                end)
+            end)
+        end
+    end)
+
+
 
     AddSelectedItemRequest:Connect(function(player: Player, itemName: string)
         playerTracker.SetSelectedItem(player, itemName)
@@ -117,6 +178,7 @@ function self:ServerAwake()
             local isInInventory = playerTracker.IsItemInInventory(player, itemName)
             if isInInventory then
                 playerTracker.AddItemToInventory(updatePlayer, itemName)
+                SendIngredientToPlayerEvent:FireAllClients(itemName, player, updatePlayer)
                 print("Added item " .. itemName .. " to player " .. updatePlayer.name .. "'s inventory.")
                 -- remove the item from the original player's inventory
                 playerTracker.RemoveFromInventory(player, itemName)

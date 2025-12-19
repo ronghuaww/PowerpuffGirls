@@ -16,10 +16,6 @@ local PlayerNameClass = "player-name"
 ---- UXML ELEMENT BINDINGS -----
 --------------------------------
 --!Bind
-local _scoreLabel: Label = nil
---!Bind
-local _timerLabel: Label = nil
---!Bind
 local _ordersContainer: VisualElement = nil
 --!Bind
 local _statusMessage: Label = nil
@@ -67,35 +63,8 @@ local isPopupVisible: boolean = false
 --------------------------------
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
-local function formatTime(seconds: number): string
-    local _minutes = math.floor(seconds / 60)
-    local _secs = seconds % 60
-    return string.format("%d:%02d", _minutes, _secs)
-end
 
-local function updateTimerDisplay(timeRemaining: number)
-    if _timerLabel then
-        _timerLabel.text = formatTime(timeRemaining)
 
-        -- Change color when low on time
-        if timeRemaining <= 30 then
-            _timerLabel:RemoveFromClassList("timer-label")
-            _timerLabel.style.color = StyleColor.new(Color.new(1, 0.2, 0.2, 1))
-        end
-    end
-end
-
-local function updateScoreDisplay(score: number)
-    if _scoreLabel then
-        _scoreLabel.text = "Score: " .. tostring(score)
-    end
-end
-
--- local function clearOrders()
---     if _ordersContainer then
---         _ordersContainer:Clear()
---     end
--- end
 
 ---MY CODE------------------------------------------------------------------------
 
@@ -313,7 +282,4 @@ function self:Start()
     --     end
     -- end)
 
-    -- Initialize displays
-    updateTimerDisplay(180)
-    updateScoreDisplay(0)
 end

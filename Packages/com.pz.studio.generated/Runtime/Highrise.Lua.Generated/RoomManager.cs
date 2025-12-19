@@ -19,13 +19,15 @@ using UnityEditor;
 
 namespace Highrise.Lua.Generated
 {
-    [AddComponentMenu("Lua/GameHUD")]
-    [LuaRegisterType(0x884835faabd36534, typeof(LuaBehaviour))]
-    public class GameHUD : LuaBehaviourThunk
+    [AddComponentMenu("Lua/RoomManager")]
+    [LuaRegisterType(0x7dd97b47ed53e961, typeof(LuaBehaviour))]
+    public class RoomManager : LuaBehaviourThunk
     {
-        private const string s_scriptGUID = "553105638870fa04d8f87070d9067d8a";
+        private const string s_scriptGUID = "94e992bc9fec01747a5326fe6d8c49ad";
         public override string ScriptGUID => s_scriptGUID;
 
+        [LuaScriptPropertyAttribute("878647f2b93d26646ac24796f4ae0cdc")]
+        [SerializeField] public UnityEngine.Object m_RoomMeterHUD = default;
 
         protected override SerializedPropertyValue[] SerializeProperties()
         {
@@ -34,13 +36,12 @@ namespace Highrise.Lua.Generated
 
             return new SerializedPropertyValue[]
             {
-                CreateSerializedProperty(_script.GetPropertyAt(0), null),
-                CreateSerializedProperty(_script.GetPropertyAt(1), null),
+                CreateSerializedProperty(_script.GetPropertyAt(0), m_RoomMeterHUD),
             };
         }
         
 #if HR_STUDIO
-        [MenuItem("CONTEXT/GameHUD/Edit Script")]
+        [MenuItem("CONTEXT/RoomManager/Edit Script")]
         private static void EditScript()
         {
             VisualStudioCodeOpener.OpenPath(AssetDatabase.GUIDToAssetPath(s_scriptGUID));

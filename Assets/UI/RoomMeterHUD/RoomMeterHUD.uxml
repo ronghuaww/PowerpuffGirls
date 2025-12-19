@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:hr="Highrise.UI"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+  <hr:UILuaView class="room-meter-hud" picking-mode="Ignore">
+
+    <!-- Meter Container (Top Right) -->
+    <VisualElement class="meter-container" picking-mode="Ignore">
+      <Label name="_meterLabel" text="Room Meter" class="meter-label"/>
+      
+      <!-- Vertical Bar with Sections -->
+      <VisualElement class="meter-bar-wrapper">
+        
+        <!-- Arrow Indicator -->
+        <VisualElement name="_arrowIndicator" class="arrow-indicator">
+          <Label text="▶" class="arrow-icon"/>
+        </VisualElement>
+        
+        <!-- Vertical Bar -->
+        <VisualElement class="meter-bar-vertical">
+          <!-- Yellow Section (Top) -->
+          <VisualElement class="meter-section meter-section-yellow"/>
+          <!-- Blue Section (Middle) -->
+          <VisualElement class="meter-section meter-section-blue"/>
+          <!-- Red Section (Bottom) -->
+          <VisualElement class="meter-section meter-section-red"/>
+        </VisualElement>
+        
+      </VisualElement>
+      
+    </VisualElement>
+
+  </hr:UILuaView>
+</UXML>

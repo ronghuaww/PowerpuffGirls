@@ -1,0 +1,70 @@
+.room-meter-hud {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.meter-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  padding: 12px 16px;
+  align-items: center;
+}
+
+.meter-label {
+  font-size: 12px;
+  color: #FFFFFF;
+  -unity-font-style: bold;
+  margin-bottom: 10px;
+  -unity-text-align: upper-center;
+}
+
+.meter-bar-wrapper {
+  flex-direction: row;
+  align-items: center;
+  height: 150px;
+}
+
+.arrow-indicator {
+  position: absolute;
+  left: -5px;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-icon {
+  font-size: 14px;
+  color: #FFFFFF;
+  -unity-text-align: middle-center;
+}
+
+.meter-bar-vertical {
+  width: 30px;
+  height: 150px;
+  border-radius: 5px;
+  overflow: hidden;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.meter-section {
+  width: 100%;
+  flex-grow: 1;
+}
+
+.meter-section-yellow {
+  background-color: #FFD93D;
+}
+
+.meter-section-blue {
+  background-color: #4ECDC4;
+}
+
+.meter-section-red {
+  background-color: #FF6B6B;
+}

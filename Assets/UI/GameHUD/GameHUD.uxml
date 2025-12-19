@@ -8,7 +8,7 @@
 >
   <hr:UILuaView class="game-hud" picking-mode="Ignore">
 
-    <!-- Top Bar: Score and Timer -->
+    <!-- Top Bar: Score and Timer
     <VisualElement class="top-bar" picking-mode="Ignore">
       <VisualElement class="score-container" picking-mode="Ignore">
         <Label name="_scoreLabel" text="Score: 0" class="score-label"/>
@@ -19,7 +19,7 @@
       </VisualElement>
 
       <VisualElement class="spacer" picking-mode="Ignore"/>
-    </VisualElement>
+    </VisualElement> -->
 
     <!-- Orders Panel (Left Side) -->
     <VisualElement class="orders-panel" picking-mode="Ignore">

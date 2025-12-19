@@ -6,46 +6,6 @@
   justify-content: space-between;
 }
 
-/* Top Bar */
-.top-bar {
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  height: 60px;
-}
-
-.score-container {
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-  padding: 8px 16px;
-}
-
-.score-label {
-  font-size: 20px;
-  color: #FFD700;
-  -unity-font-style: bold;
-}
-
-.timer-container {
-  background-color: rgba(0, 0, 0, 0.8);
-  border-radius: 15px;
-  padding: 10px 25px;
-  border-width: 2px;
-  border-color: #FF6B6B;
-}
-
-.timer-label {
-  font-size: 28px;
-  color: white;
-  -unity-font-style: bold;
-  -unity-text-align: middle-center;
-}
-
-.spacer {
-  width: 100px;
-}
-
 /* Orders Panel */
 .orders-panel {
   position: absolute;

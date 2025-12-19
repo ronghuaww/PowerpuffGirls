@@ -19,11 +19,11 @@ using UnityEditor;
 
 namespace Highrise.Lua.Generated
 {
-    [AddComponentMenu("Lua/GameHUD")]
-    [LuaRegisterType(0x884835faabd36534, typeof(LuaBehaviour))]
-    public class GameHUD : LuaBehaviourThunk
+    [AddComponentMenu("Lua/SubmitCounterTapped")]
+    [LuaRegisterType(0x40c93fedc626380d, typeof(LuaBehaviour))]
+    public class SubmitCounterTapped : LuaBehaviourThunk
     {
-        private const string s_scriptGUID = "553105638870fa04d8f87070d9067d8a";
+        private const string s_scriptGUID = "ac52c8dcb70be0446a60d2d78344e07c";
         public override string ScriptGUID => s_scriptGUID;
 
 
@@ -34,13 +34,11 @@ namespace Highrise.Lua.Generated
 
             return new SerializedPropertyValue[]
             {
-                CreateSerializedProperty(_script.GetPropertyAt(0), null),
-                CreateSerializedProperty(_script.GetPropertyAt(1), null),
             };
         }
         
 #if HR_STUDIO
-        [MenuItem("CONTEXT/GameHUD/Edit Script")]
+        [MenuItem("CONTEXT/SubmitCounterTapped/Edit Script")]
         private static void EditScript()
         {
             VisualStudioCodeOpener.OpenPath(AssetDatabase.GUIDToAssetPath(s_scriptGUID));

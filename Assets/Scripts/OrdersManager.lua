@@ -8,6 +8,9 @@ local OrdersList: {OrdersBase} = {}
 --!SerializeField
 local GameHUD: GameHUD = nil
 
+--!SerializeField
+local CounterObject: GameObject = nil
+
 --------------------------------
 ------     NETWORKING     ------
 --------------------------------
@@ -126,7 +129,6 @@ function self:ServerAwake()
             AssignOrderToPlayer(player)
         end)
     end)
-
 end
 
 
@@ -137,10 +139,21 @@ function self:ClientAwake()
         GameHUD.OrderAssigned(orderName, requiredIngredients)
     end)
 
-    orderRemovedEvent:Connect(function()
+    orderRemovedEvent:Connect(function(modifiedPlayer, orderName)
         print("Received order removal")
-        GameHUD.removeOrder()
-        -- remove from player held items as well
+        if modifiedPlayer == client.localPlayer then
+            GameHUD.removeOrder()
+        end
+
+        local order = getOrderByName(orderName)
+        if not order then return end
+
+        local pos = CounterObject.transform.position + Vector3.new(0, 1.7, 0)
+        local orderPrefabInstance = Object.Instantiate(order.GetPrefab(), pos, Quaternion.identity)
+
+        Timer.After(5.0, function()
+            GameObject.Destroy(orderPrefabInstance)
+        end)
     end)
 end
 
@@ -163,6 +176,8 @@ function getOrderByName(name: string): OrdersBase | nil
     end
     return nil
 end
+
+
 
 -- SERVER FUNCTION
 function checkOrderCompleted(player): boolean
