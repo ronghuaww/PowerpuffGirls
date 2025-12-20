@@ -17,7 +17,8 @@ MonoBehaviour:
   _properties: []
   m_name: Milk
   m_icon: {fileID: 21300000, guid: f47b1358814e94241b2f74ebb5beea0a, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: 54c99d777774041b9bc7d04221e81ad4, type: 3}
+  m_prefab: {fileID: 2829644760446609312, guid: 39cd722d9d857aa47994a02ff7687449,
+    type: 3}
   references:
     version: 2
     RefIds: []

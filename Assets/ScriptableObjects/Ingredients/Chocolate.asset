@@ -17,7 +17,8 @@ MonoBehaviour:
   _properties: []
   m_name: Chocolate
   m_icon: {fileID: 21300000, guid: c2a461aa755984e3cb91e2d515a7643d, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: 993eea55c4e634c15a2c38d2b486df01, type: 3}
+  m_prefab: {fileID: 7163376535873186808, guid: 5dcb3bf316acd2b4cb96c7e0a7c8ab0a,
+    type: 3}
   references:
     version: 2
     RefIds: []

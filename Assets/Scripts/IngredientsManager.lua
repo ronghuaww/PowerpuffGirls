@@ -17,7 +17,7 @@ local SendIngredientToPlayerEvent = Event.new("SendIngredientToPlayerEvent")
 function SpawnIngredient(ingredientBase: IngredientsBase, player: Player, itemIndex: number)
     local ingredientPrefab = ingredientBase.GetPrefab()
     if ingredientPrefab then
-        local playerHeadPos = player.character.transform.position + Vector3.new(0,3,0) + (Vector3.new(0,1,0) * itemIndex)
+        local playerHeadPos = player.character.transform.position + Vector3.new(0, 3, 0) + (Vector3.new(0, 0.6, 0) * itemIndex)
         local ingredientInstance = GameObject.Instantiate(ingredientPrefab, playerHeadPos, Quaternion.identity)
         ingredientInstance.tag = "HeldItem"
         ingredientInstance.transform.parent = player.character.transform

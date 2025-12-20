@@ -17,7 +17,8 @@ MonoBehaviour:
   _properties: []
   m_name: Cherry
   m_icon: {fileID: 21300000, guid: ccd637d31756d467889a0db4e8bc4571, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: 0cb5c6cfac0c04428890edde8e949ade, type: 3}
+  m_prefab: {fileID: 5027642972181998221, guid: 67e6c1f8802c8d44cafabdbe11fcbc59,
+    type: 3}
   references:
     version: 2
     RefIds: []

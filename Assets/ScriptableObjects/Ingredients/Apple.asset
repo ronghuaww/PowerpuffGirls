@@ -17,7 +17,8 @@ MonoBehaviour:
   _properties: []
   m_name: Apple
   m_icon: {fileID: 21300000, guid: e47aa0c6adb3d43b88665c6b568d9031, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: 95f1497929ba84c0ab2bf19a2e6db3d9, type: 3}
+  m_prefab: {fileID: 5354711972452701375, guid: a2e482ee1ad7e08448136552822b24a6,
+    type: 3}
   references:
     version: 2
     RefIds: []

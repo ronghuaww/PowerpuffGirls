@@ -11,7 +11,7 @@ local _arrowIndicator: VisualElement = nil
 --------------------------------
 ------     CONSTANTS      ------
 --------------------------------
-local BAR_HEIGHT = 100
+local BAR_HEIGHT =300
 
 --------------------------------
 ------     LOCAL STATE    ------
@@ -37,7 +37,7 @@ local function updateArrowPosition()
     -- Calculate position (0% at bottom, 100% at top)
     local _position = _invertedPercentage * BAR_HEIGHT
     
-    _arrowIndicator.style.top = StyleLength.new(Length.new(_position))
+    --_arrowIndicator.style.top = StyleLength.new(Length.new(_position))
 end
 
 --------------------------------
@@ -93,5 +93,5 @@ function self:Start()
     print("RoomMeterHUD: Initialized")
     
     -- Initialize at 50%
-    SetPercentage(50)
+    SetPercentage(0)
 end

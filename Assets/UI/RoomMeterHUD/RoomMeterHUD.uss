@@ -32,8 +32,10 @@
 .meter-bar-wrapper {
   flex-direction: row;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 50px;
+  /* background-color: #FFECDE;  */
+  width: 40px;
+  /* border-width: 4px; */
+  /* border-color: #dd9061; */
   padding-bottom: 10px;
   padding-top: 10px;
   margin-right: 10px;
@@ -45,16 +47,22 @@
   position: absolute;
   width: 20px;
   height: 20px;
+  top: -2px;
+  top: 230px; 
+  /* left: 3px; */
 }
 
 .arrow-icon {
-  font-size: 14px;
-  color: #FFFFFF;
+  font-size: 16px;
+  color: #dd9061;
   -unity-text-align: middle-center;
+  -unity-font-style: bold;
+  -unity-text-outline-width: 10px;
+  -unity-text-outline-color: #fdf4d7;
 }
 
 .meter-bar-vertical {
-  width: 20px;
+  width: 17px;
   height: 100%;
   border-radius: 5px;
   overflow: hidden;
