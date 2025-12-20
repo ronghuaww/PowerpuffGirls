@@ -16,7 +16,7 @@ MonoBehaviour:
   _networkId: 1339080641
   _properties: []
   m_name: Strawberry
-  m_icon: {fileID: 21300000, guid: e2f2aee3216ad477f9e93f16bba43bcc, type: 3}
+  m_icon: {fileID: 21300000, guid: 9a82298368e724e9d9d612c7506c9901, type: 3}
   m_prefab: {fileID: 0}
   references:
     version: 2

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 232ed76ee7a62581917c81051ded2a9a, type: 3}
-  m_Name: StrawberryCake
+  m_Name: StrawberryDonut
   m_EditorClassIdentifier: 
   _script: {fileID: -974389366465450183, guid: 99f1d7bb5d7925542ba381d0a7322a4f, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: 
+  m_name: Strawberry Donut
   m_ingredients:
-  - {fileID: 11400000, guid: 6b0e6d2ae06da4474a10c77da47dd352, type: 2}
-  - {fileID: 11400000, guid: cdeedf891b5664d66acf1c28e7ff4fa4, type: 2}
   - {fileID: 11400000, guid: b66a2f589853d41e4b85498f39f54731, type: 2}
-  m_icon: {fileID: 21300000, guid: 1a0076cde25234f7eae5c14897e1bf84, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: 1b2709bd0a28842fea10e642c823de09, type: 3}
+  - {fileID: 11400000, guid: cdeedf891b5664d66acf1c28e7ff4fa4, type: 2}
+  - {fileID: 11400000, guid: cd692e8f6ba2fed46b38384df927a043, type: 2}
+  m_icon: {fileID: 21300000, guid: 5d2d9a9124ca347b5bd3d1823a8c86f1, type: 3}
+  m_prefab: {fileID: 919132149155446097, guid: efed4fa6133d14b5686c711c43eae3cf, type: 3}
   references:
     version: 2
     RefIds: []

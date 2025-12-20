@@ -20,7 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cdeedf891b5664d66acf1c28e7ff4fa4, type: 2}
   - {fileID: 11400000, guid: 7dd15542334a14b5bb4311373ccce269, type: 2}
   - {fileID: 11400000, guid: 6b0e6d2ae06da4474a10c77da47dd352, type: 2}
-  m_prefab: {fileID: 919132149155446097, guid: fd8753cd9375543e28cfb7e2dd4df73a, type: 3}
+  m_icon: {fileID: 21300000, guid: 2549ade70097b43dea1df45b626585da, type: 3}
+  m_prefab: {fileID: 919132149155446097, guid: fba2a6e70c82f4ed5b1c60af2e07c980, type: 3}
   references:
     version: 2
     RefIds: []
