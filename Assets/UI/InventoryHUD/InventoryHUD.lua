@@ -65,16 +65,11 @@ local function createIngredientSlot(ingredientData: IngredientsBase, index: numb
     --     _slot:AddToClassList(_colorClass)
     -- end
 
-    -- Add label with emoji/letter
-    local _label = Label.new()
-    _label:AddToClassList(IngredientLabelClass)
-    _label.text = ingredientData.GetName()
 
     local _icon = Image.new()
     _icon.image = ingredientData.GetIcon().texture
 
     _slot:Add(_icon)
-    _slot:Add(_label)
 
     _slot:RegisterPressCallback(function()
         --ingredientsManager.AddHeldItemRequest:FireServer(ingredientData.GetName())

@@ -11,7 +11,7 @@ local IngredientSlotSelectedClass = "ingredient-slot-selected"
 local IngredientLabelClass = "ingredient-label"
 local PlayerItemClass = "player-item"
 local PlayerNameClass = "player-name"
-local OrderIconsClass = "order-icons"
+local IngredientIconsClass = "ingredient-icons"
 
 --------------------------------
 ---- UXML ELEMENT BINDINGS -----
@@ -20,6 +20,12 @@ local OrderIconsClass = "order-icons"
 local _ordersContainer: VisualElement = nil
 --!Bind
 local _statusMessage: Label = nil
+--!Bind
+local _orderLabel: Label = nil
+
+--!Bind
+local _orderIcon: VisualElement = nil
+
 -- --!Bind
 -- local _playerSelectPopup: VisualElement = nil
 -- --!Bind
@@ -74,29 +80,17 @@ local function addOrderDisplay(recipeName: string, ingredients: {string})
         return
     end
 
-    local _orderItem = VisualElement.new()
-    _orderItem:AddToClassList(OrderItemClass)
+    -- local _orderItem = VisualElement.new()
+    -- _orderItem:AddToClassList(OrderItemClass)
 
     -- Order name
-    local _nameLabel = Label.new()
-    _nameLabel:AddToClassList(OrderLabelClass)
-    _nameLabel.text = recipeName
-    _orderItem:Add(_nameLabel)
+    _orderLabel.text = recipeName
     print("Adding order display for: " .. #ingredients .. " ingredients")
 
     -- order icon
-    local _orderIcon = Image.new()
     local orderData = ordersManager.getOrderByName(recipeName)
     if orderData == nil then return end
-    _orderIcon.image = orderData.GetIcon().texture
-    _orderIcon:AddToClassList(OrderIconsClass)
-    _orderItem:Add(_orderIcon)
-
-    -- dash 
-    local _dashLabel = Label.new()
-    _dashLabel:AddToClassList(OrderLabelClass)
-    _dashLabel.text = "----"
-    _orderItem:Add(_dashLabel)
+    _orderIcon.style.backgroundImage = orderData.GetIcon().texture
 
 
     -- Ingredients list
@@ -113,8 +107,8 @@ local function addOrderDisplay(recipeName: string, ingredients: {string})
 
             local _ingredientIcon = UIImage.new()
             _ingredientIcon.image = ingredientData.GetIcon().texture
-            _ingredientIcon:AddToClassList(OrderIconsClass)
-            _orderItem:Add(_ingredientIcon)
+            _ingredientIcon:AddToClassList(IngredientIconsClass)
+            _ordersContainer:Add(_ingredientIcon)
 
             -- _ingredientsLabel:AddToClassList("order-ingredients")
             -- _ingredientsLabel.text = ingredient
@@ -122,7 +116,7 @@ local function addOrderDisplay(recipeName: string, ingredients: {string})
         end
 
     end
-    _ordersContainer:Add(_orderItem)
+    --_ordersContainer:Add(_orderItem)
 end
 ------------------------------------------------------------------------
 
@@ -235,6 +229,12 @@ end
 function removeOrder()
     if _ordersContainer then
         _ordersContainer:Clear()
+    end
+    if _orderLabel then
+        _orderLabel:Clear()
+    end
+    if _orderIcon then
+        _orderIcon:Clear()
     end
 end
 

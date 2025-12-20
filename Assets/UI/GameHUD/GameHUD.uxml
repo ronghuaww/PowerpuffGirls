@@ -22,8 +22,13 @@
     </VisualElement> -->
 
     <!-- Orders Panel (Left Side) -->
-    <VisualElement class="orders-panel" picking-mode="Ignore">
-      <VisualElement name="_ordersContainer" class="orders-container" picking-mode="Ignore"/>
+    <VisualElement class="orders-parent" picking-mode="Ignore">
+      <VisualElement class="orders-panel" picking-mode="Ignore">
+        <Label name="_orderLabel" text="ORDER TITLE" class="order-label" picking-mode="Ignore"/>
+        <VisualElement name="_orderIcon" class="order-icons" picking-mode="Ignore"/>
+        <Label text="—" class="dash-label" picking-mode="Ignore"/>
+        <VisualElement name="_ordersContainer" class="orders-container" picking-mode="Ignore"/>
+      </VisualElement>
     </VisualElement>
 
     <!-- Game Status Message (Center) -->
