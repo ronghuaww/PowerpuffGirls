@@ -19760,7 +19760,20 @@ MonoBehaviour:
   _uiOutputSettings:
     rid: -2
   m_OrdersList:
-  - {fileID: 11400000, guid: ac43b1530478ac04d954eaaaaae963a8, type: 2}
+  - {fileID: 11400000, guid: eb6b12cca79f34028be8d38802bcfff2, type: 2}
+  - {fileID: 11400000, guid: 83e4cb5259d39465fbb0e585d69a187d, type: 2}
+  - {fileID: 11400000, guid: 97ebda8271d8b4a3d95a97e671fd61d2, type: 2}
+  - {fileID: 11400000, guid: d517d1ac271ad4177a2d16c9f74528e7, type: 2}
+  - {fileID: 11400000, guid: 365a5fcf0246f4d779cce76b0879a54a, type: 2}
+  - {fileID: 11400000, guid: 92d0fa49198c84e87b60c1a08e4d014e, type: 2}
+  - {fileID: 11400000, guid: c292db2a7528240f8a1579dbc21f17d2, type: 2}
+  - {fileID: 11400000, guid: fcc282ef56f8a40409822817fac8f4fa, type: 2}
+  - {fileID: 11400000, guid: d909dbaf911684bfc8e68780326d9553, type: 2}
+  - {fileID: 11400000, guid: 4f91601bfdeef438681affcdc4aacbbb, type: 2}
+  - {fileID: 11400000, guid: ce256f9959ed9420c8a3e271a5bd274d, type: 2}
+  - {fileID: 11400000, guid: 68b10ade6db1b4eaea8e220c90b19c9e, type: 2}
+  - {fileID: 11400000, guid: 5d059e32a7dad4731bb291ec17c30858, type: 2}
+  - {fileID: 11400000, guid: a236b5f87726d49e69e18244b470d8e7, type: 2}
   m_GameHUD: {fileID: 1656276378}
   m_CounterObject: {fileID: 1595584152}
   references:
