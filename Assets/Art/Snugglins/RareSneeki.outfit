@@ -1,0 +1,46 @@
+{
+  "IncludeFallbacks": true,
+  "Skeleton": "pet_plushie2",
+  "Clothing": [
+    {
+      "Id": "body-pet_snugglinstwo2025whiskersrare",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025browrare5",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025eyesrare5",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025mouthrare5",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025blushrare01",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025earrare01",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025tailrare2",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025colorpatch12",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025bodyrare02",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025headrare02",
+      "Color": 0
+    }
+  ]
+}
