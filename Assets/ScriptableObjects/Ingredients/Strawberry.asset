@@ -17,7 +17,7 @@ MonoBehaviour:
   _properties: []
   m_name: Strawberry
   m_icon: {fileID: 21300000, guid: 9a82298368e724e9d9d612c7506c9901, type: 3}
-  m_prefab: {fileID: 0}
+  m_prefab: {fileID: 919132149155446097, guid: e05b587315a1c47fc9facadd2386536c, type: 3}
   references:
     version: 2
     RefIds: []
