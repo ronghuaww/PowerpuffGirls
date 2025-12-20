@@ -15,10 +15,12 @@ MonoBehaviour:
   _script: {fileID: -974389366465450183, guid: 99f1d7bb5d7925542ba381d0a7322a4f, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: 
+  m_name: Chris' Brownies
   m_ingredients:
-  - {fileID: 11400000, guid: e46b253cee3d157438b46574821321e7, type: 2}
+  - {fileID: 11400000, guid: 7dd15542334a14b5bb4311373ccce269, type: 2}
   - {fileID: 11400000, guid: cdeedf891b5664d66acf1c28e7ff4fa4, type: 2}
+  - {fileID: 11400000, guid: 6c396309670974f3ebdc38afda7119e8, type: 2}
+  m_icon: {fileID: 21300000, guid: e2dff96ec17454fb5b7058b51a173306, type: 3}
   m_prefab: {fileID: 0}
   references:
     version: 2

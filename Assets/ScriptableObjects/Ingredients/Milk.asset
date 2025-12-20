@@ -16,7 +16,7 @@ MonoBehaviour:
   _networkId: 1339080641
   _properties: []
   m_name: Milk
-  m_icon: {fileID: 21300000, guid: 4b792f0da2c66486b957dddd4b05f60a, type: 3}
+  m_icon: {fileID: 21300000, guid: f47b1358814e94241b2f74ebb5beea0a, type: 3}
   m_prefab: {fileID: 919132149155446097, guid: 54c99d777774041b9bc7d04221e81ad4, type: 3}
   references:
     version: 2

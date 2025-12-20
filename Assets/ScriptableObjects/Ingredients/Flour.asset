@@ -16,7 +16,7 @@ MonoBehaviour:
   _networkId: 1339080641
   _properties: []
   m_name: Flour
-  m_icon: {fileID: 21300000, guid: 0cad0ffd2565f4ae4aec883aedb0b40b, type: 3}
+  m_icon: {fileID: 21300000, guid: 62aed02dfb2464a31aa9058dee4559f9, type: 3}
   m_prefab: {fileID: 919132149155446097, guid: a90ebd03439e74bd5b03aa74d3259770, type: 3}
   references:
     version: 2

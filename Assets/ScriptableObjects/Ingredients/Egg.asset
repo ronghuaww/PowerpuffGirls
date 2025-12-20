@@ -16,7 +16,7 @@ MonoBehaviour:
   _networkId: 1339080641
   _properties: []
   m_name: Egg
-  m_icon: {fileID: 21300000, guid: 53a8599e5f1874dcdb3c2004d0fbcfdc, type: 3}
+  m_icon: {fileID: 21300000, guid: 190a48dbfce794ed1ada9af26cea2062, type: 3}
   m_prefab: {fileID: 919132149155446097, guid: 51c793a4983794d45a2557928f7444ce, type: 3}
   references:
     version: 2

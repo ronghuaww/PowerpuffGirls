@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b6df2dbf89b3ed11332984e5b7fbe79, type: 3}
-  m_Name: Chocolate
+  m_Name: Cherry
   m_EditorClassIdentifier: 
   _script: {fileID: -974389366465450183, guid: f1b2f20e42443e04a9ed989be1a0beac, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: Chocolate
-  m_icon: {fileID: 21300000, guid: c2a461aa755984e3cb91e2d515a7643d, type: 3}
-  m_prefab: {fileID: 919132149155446097, guid: 993eea55c4e634c15a2c38d2b486df01, type: 3}
+  m_name: Cherry
+  m_icon: {fileID: 21300000, guid: ccd637d31756d467889a0db4e8bc4571, type: 3}
+  m_prefab: {fileID: 0}
   references:
     version: 2
     RefIds: []

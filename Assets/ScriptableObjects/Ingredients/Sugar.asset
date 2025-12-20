@@ -16,7 +16,7 @@ MonoBehaviour:
   _networkId: 1339080641
   _properties: []
   m_name: Sugar
-  m_icon: {fileID: 21300000, guid: 9082eae70ac6c4f39a869b4bbd414de2, type: 3}
+  m_icon: {fileID: 21300000, guid: e24a41ec9e3ef4e099cd6c6767127322, type: 3}
   m_prefab: {fileID: 919132149155446097, guid: efaf7e158eaa340d8bf8d2cfe2b0f1b2, type: 3}
   references:
     version: 2
