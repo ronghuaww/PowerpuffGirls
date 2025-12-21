@@ -15,9 +15,10 @@ MonoBehaviour:
   _script: {fileID: -974389366465450183, guid: b524554a0243acf4fb4bc7a2d97c12b7, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: EpicCalli
+  m_name: Calli
   m_outfit: {fileID: -7553472394939420986, guid: c4afeb8707d094224a598efff1b4c158,
     type: 3}
+  m_rarity: Epic
   references:
     version: 2
     RefIds: []

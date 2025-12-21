@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CharacterSpawn
   - HeldItem
+  - PictureFrame
   layers:
   - Default
   - TransparentFX
