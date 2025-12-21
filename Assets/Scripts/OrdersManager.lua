@@ -84,13 +84,28 @@ function AssignOrderToPlayer(player: Player)
     _playerInfo.order.value = _order.GetName()
     -- go through the items and add it to people's inventory
 
-    local _currentInventory = _playerInfo.inventory.value or {}
 
+    -- Distribute all ingredients to random players in the scene
     for i, ingredient in ipairs(_order.GetIngredients()) do
-        print("Adding ingredient to player inventory: " .. ingredient.GetName())
-        table.insert(_currentInventory, 1, ingredient.GetName())
+        print("Adding ingredient to player inventory: " .. ingredient.GetName(), i)
+
+        if 1 == i then
+            -- First ingredient goes to the main player
+            print("Adding to main player: " .. player.name)
+            playerTracker.AddItemToInventory(player, ingredient.GetName())
+            continue
+        end
+
+        local randPlayer = playerTracker.GetRandomPlayer()
+        if randPlayer then
+            print("Random player selected: " .. randPlayer.name)
+            playerTracker.AddItemToInventory(randPlayer, ingredient.GetName())
+        else
+            -- Fallback to main player if no other players available
+            print("No random player available, adding to main player: " .. player.name)
+            playerTracker.AddItemToInventory(player, ingredient.GetName())
+        end
     end
-    _playerInfo.inventory.value = _currentInventory
 
     -- Notify client about the assigned order
     orderAssignedEvent:FireClient(player, _order.GetName(), getIngredientNames(_order))

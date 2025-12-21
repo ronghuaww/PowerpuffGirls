@@ -82,7 +82,7 @@ function SendIngredientToPlayer(ingredientName: string, playerSent: Player, play
             _spawnedObject.transform.position = currentPos + Vector3.new(0, arcHeight, 0)
         end
     end)
-    :Duration(1.0)
+    :Duration(2.5)
     :EaseInOutQuadratic()
     :OnStop(function()
         if _spawnedObject then

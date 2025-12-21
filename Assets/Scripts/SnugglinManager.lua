@@ -29,7 +29,7 @@ local _seenSnugglins = {}
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
 
-local function getCharacterFromGameObject(gameObject: GameObject): Character
+local function getCharacterFromGameObject(gameObject: GameObject): Character | nil
     if not gameObject then
         return nil
     end

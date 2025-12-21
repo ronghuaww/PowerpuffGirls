@@ -18,6 +18,20 @@ end
 function GetPlayerSelectedItem(player)
     return players[player].selectedItem.value
 end
+
+function GetRandomPlayer(): Player | nil
+    local playerList = {}
+    for player, _ in pairs(players) do
+        table.insert(playerList, player)
+    end
+
+    if #playerList == 0 then
+        return nil
+    end
+
+    local randomIndex = math.random(1, #playerList)
+    return playerList[randomIndex]
+end
 ------------ Player Tracking ------------
 function TrackPlayers(game, characterCallback)
     scene.PlayerJoined:Connect(function(scene, player)
@@ -57,6 +71,9 @@ function self:ClientAwake()
 
         playerinfo.inventory.Changed:Connect(function(newInventory, oldInventory)
 
+            if player ~= client.localPlayer then
+                return
+            end
             inventoryHUD.UpdateInventoryDisplay(newInventory)
 
             -- Update UI or other client-side elements based on player score change
