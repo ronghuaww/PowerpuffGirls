@@ -16,6 +16,9 @@ local CounterObject: GameObject = nil
 --!SerializeField
 local OrderCompleteVFX: GameObject = nil
 
+--!SerializeField
+local indicatorObject: GameObject = nil
+
 
 
 
@@ -37,6 +40,25 @@ orderRemovedEvent = Event.new("OrderRemovedEvent")
 --------------------------------
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
+
+local function indicatorBobble()
+    if not indicatorObject then return end
+
+    local _height = 0.3
+    local _duration = 2.0
+    local _transform = indicatorObject.transform
+    local _startY = _transform.position.y
+
+    local _tween = Tween.FromTo(0, 1, function(progress)
+        local _offset = math.sin(progress * math.pi) * _height
+        local _pos = _transform.position
+        _transform.position = Vector3.new(_pos.x, _startY + _offset, _pos.z)
+    end)
+    :Duration(_duration)
+    :Loop(-1)
+    :PingPong()
+    :Play()
+end
 
 local function getRandomOrder(): OrdersBase | nil
     if #OrdersList == 0 then
@@ -159,6 +181,7 @@ end
 
 
 function self:ClientAwake()
+    indicatorBobble()
     -- Client-side logic can be added here if needed
     orderAssignedEvent:Connect(function(orderName, requiredIngredients)
         print("Received order assignment: " .. orderName)
@@ -173,6 +196,8 @@ function self:ClientAwake()
 
         local order = getOrderByName(orderName)
         if not order then return end
+        
+        indicatorObject:SetActive(false)
 
         local pos = CounterObject.transform.position + Vector3.new(0, 1.7, 0)
         local orderPrefabInstance = Object.Instantiate(order.GetPrefab(), pos, Quaternion.identity)
@@ -188,6 +213,7 @@ function self:ClientAwake()
 
             Timer.After(3.0, function()
                 GameObject.Destroy(vfxInstance)
+                indicatorObject:SetActive(true)
             end)
         end
 

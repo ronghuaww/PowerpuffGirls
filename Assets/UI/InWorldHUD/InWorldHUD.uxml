@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:hr="Highrise.UI"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd"
+>
+
+  <hr:UILuaView class="in-world-h-u-d">
+    <!-- In-World HUD Content Here -->
+    <VisualElement name="_image" class="in-world-image" picking-mode="ignore"/>
+  </hr:UILuaView>
+
+</UXML>

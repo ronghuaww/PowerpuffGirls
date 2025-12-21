@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cdeedf891b5664d66acf1c28e7ff4fa4, type: 2}
   - {fileID: 11400000, guid: 6c396309670974f3ebdc38afda7119e8, type: 2}
   m_icon: {fileID: 21300000, guid: e2dff96ec17454fb5b7058b51a173306, type: 3}
-  m_prefab: {fileID: 0}
+  m_prefab: {fileID: 2779651005024180983, guid: 35640ee5ff5abbf4284da0ed368e0102,
+    type: 3}
   references:
     version: 2
     RefIds: []
