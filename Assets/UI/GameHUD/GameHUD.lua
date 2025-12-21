@@ -90,6 +90,7 @@ local function addOrderDisplay(recipeName: string, ingredients: {string})
     -- order icon
     local orderData = ordersManager.getOrderByName(recipeName)
     if orderData == nil then return end
+
     _orderIcon.style.backgroundImage = orderData.GetIcon().texture
 
 

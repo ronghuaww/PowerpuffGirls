@@ -11,7 +11,7 @@ local snugglinPrefab: GameObject = nil
 local spawnPointOBJ: GameObject = nil
 
 --!SerializeField
-local sittingPointsOBJ: {GameObject} = nil
+local sittingAnchors: {Anchor} = nil
 
 --!SerializeField
 local snugglinData: {SnugglinBase} = nil
@@ -39,12 +39,22 @@ local function getRandomSnugglinData(): SnugglinBase
     return snugglinData[_randomIndex]
 end
 
-local function getRandomSittingPoint(): Vector3 | nil
-    if not sittingPointsOBJ or #sittingPointsOBJ == 0 then
+local function getRandomSittingAnchor(): Anchor?
+    if not sittingAnchors or #sittingAnchors == 0 then
         return nil
     end
-    local _randomIndex = math.random(1, #sittingPointsOBJ)
-    return sittingPointsOBJ[_randomIndex].transform.position
+    -- Find an unoccupied anchor
+    local _availableAnchors: {Anchor} = {}
+    for _, anchor in ipairs(sittingAnchors) do
+        if not anchor.isOccupied then
+            table.insert(_availableAnchors, anchor)
+        end
+    end
+    if #_availableAnchors == 0 then
+        return nil
+    end
+    local _randomIndex = math.random(1, #_availableAnchors)
+    return _availableAnchors[_randomIndex]
 end
 
 local function applyOutfitToCharacter(character: Character, outfit: CharacterOutfit)
@@ -83,14 +93,13 @@ function SpawnAtPosition(): GameObject | nil
     return _spawnedNpc
 end
 
--- Makes the Snugglin NPC walk to the specified position
+-- Makes the Snugglin NPC walk to a random available anchor and sit
 -- Returns true if movement was initiated successfully
-function WalkToPosition(snugglinObject: GameObject, callback: ((...any) -> (...any))?): boolean
+function WalkAndSitAtRandomAnchor(snugglinObject: GameObject, callback: ((...any) -> (...any))?): boolean
     if not snugglinObject then
-        print("ERROR: No snugglinObject provided to WalkToPosition")
+        print("ERROR: No snugglinObject provided to WalkAndSitAtRandomAnchor")
         return false
     end
-    local randomSittingPos = getRandomSittingPoint()
 
     local _character = getCharacterFromGameObject(snugglinObject)
     if not _character then
@@ -98,10 +107,93 @@ function WalkToPosition(snugglinObject: GameObject, callback: ((...any) -> (...a
         return false
     end
 
-    return _character:MoveTo(randomSittingPos, -1, callback)
+    local _anchor = getRandomSittingAnchor()
+    if not _anchor then
+        print("ERROR: No available sitting anchors")
+        return false
+    end
+
+    -- Walk near the anchor's enter position, then jump and sit
+    local _enterPos = _anchor.enterFromPosition
+    local _anchorPos = _anchor.transform.position
+
+    _character:MoveWithinRangeOf(_enterPos, 0, -1, function()
+        -- Once close enough, jump to the anchor position
+        _character:JumpTo(_anchorPos, function()
+            -- After landing, attach to anchor and play sitting animation
+            _character:TeleportToAnchor(_anchor)
+            _character.transform.rotation = _anchor.transform.rotation
+            _character:PlayEmote("idle-lookAround")
+
+            Timer.After(5, function()
+                _character:PlayEmote("idle-blink", true)
+            end)
+
+            if callback then
+                callback()
+            end
+        end)
+    end)
+
+    return true
 end
 
+-- -- Makes the Snugglin NPC walk to a specific anchor and sit
+-- -- Returns true if movement was initiated successfully
+-- function WalkAndSitAtAnchor(snugglinObject: GameObject, anchor: Anchor, callback: ((...any) -> (...any))?): boolean
+--     if not snugglinObject then
+--         print("ERROR: No snugglinObject provided to WalkAndSitAtAnchor")
+--         return false
+--     end
+--     if not anchor then
+--         print("ERROR: No anchor provided to WalkAndSitAtAnchor")
+--         return false
+--     end
 
+--     local _character = getCharacterFromGameObject(snugglinObject)
+--     if not _character then
+--         print("ERROR: Snugglin does not have a Character component")
+--         return false
+--     end
+
+--     return _character:MoveToAnchor(anchor, -1, callback)
+-- end
+
+
+
+-- Makes the Snugglin jump off anchor, walk back to spawn, and destroy
+function WalkBackToSpawnAndDespawn(snugglinObject: GameObject, callback: ((...any) -> (...any))?): boolean
+    if not snugglinObject then
+        print("ERROR: No snugglinObject provided to WalkBackToSpawnAndDespawn")
+        return false
+    end
+
+    local _character = getCharacterFromGameObject(snugglinObject)
+    if not _character then
+        print("ERROR: Snugglin does not have a Character component")
+        return false
+    end
+
+    local _spawnPos = spawnPointOBJ.transform.position
+
+    -- First, detach from anchor by jumping to nearby NavMesh position
+    local _currentPos = _character.transform.position
+    local _jumpOffPos = _currentPos + Vector3.new(-1, 0, 0) -- Jump slightly forward/off the stool
+
+    _character:JumpTo(_jumpOffPos, function()
+        -- Now walk back to spawn position
+        _character:MoveTo(_spawnPos, -1, function()
+            -- Arrived at spawn, destroy the instance
+            DespawnSnugglin(snugglinObject)
+
+            if callback then
+                callback()
+            end
+        end)
+    end)
+
+    return true
+end
 
 -- Destroys a spawned Snugglin NPC
 function DespawnSnugglin(snugglinObject: GameObject): boolean
@@ -129,5 +221,15 @@ end
 
 function self:ClientStart()
     local snugglinObject = SpawnAtPosition()
-    Timer.After(2, function() WalkToPosition(snugglinObject) end)
+    Timer.After(2, function()
+        WalkAndSitAtRandomAnchor(snugglinObject, function()
+            print("Snugglin arrived and is now sitting!")
+        end)
+    end)
+
+    Timer.After(20, function()
+        WalkBackToSpawnAndDespawn(snugglinObject, function()
+            print("Snugglin has despawned.")
+        end)
+    end)
 end

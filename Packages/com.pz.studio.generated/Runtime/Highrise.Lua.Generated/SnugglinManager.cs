@@ -28,7 +28,7 @@ namespace Highrise.Lua.Generated
 
         [SerializeField] public UnityEngine.GameObject m_snugglinPrefab = default;
         [SerializeField] public UnityEngine.GameObject m_spawnPointOBJ = default;
-        [SerializeField] public System.Collections.Generic.List<UnityEngine.GameObject> m_sittingPointsOBJ = default;
+        [SerializeField] public System.Collections.Generic.List<Highrise.Client.Anchor> m_sittingAnchors = default;
         [LuaScriptPropertyAttribute("b524554a0243acf4fb4bc7a2d97c12b7")]
         [SerializeField] public System.Collections.Generic.List<UnityEngine.Object> m_snugglinData = default;
 
@@ -41,7 +41,7 @@ namespace Highrise.Lua.Generated
             {
                 CreateSerializedProperty(_script.GetPropertyAt(0), m_snugglinPrefab),
                 CreateSerializedProperty(_script.GetPropertyAt(1), m_spawnPointOBJ),
-                CreateSerializedProperty(_script.GetPropertyAt(2), m_sittingPointsOBJ),
+                CreateSerializedProperty(_script.GetPropertyAt(2), m_sittingAnchors),
                 CreateSerializedProperty(_script.GetPropertyAt(3), m_snugglinData),
             };
         }
