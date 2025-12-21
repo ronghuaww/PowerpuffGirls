@@ -5,7 +5,6 @@ local playerTracker = require("PlayerTracker")
 --!SerializeField
 local IngredientData: IngredientsBase = nil
 
-
 function self:ClientStart()
     -- Remove this script from itself, ignore tapping ones self
     local TapHand = self.gameObject:GetComponent(TapHandler)
@@ -19,10 +18,13 @@ function self:ClientStart()
 
         if playerTracker.IsItemInHeldItems(localPlayer, IngredientData.GetName()) then
             ingredientsManager.AddItemInventoryRequest:FireServer(localPlayer, IngredientData.GetName())
-            Object.Destroy(self.gameObject)
         end
 
     end)
+end
+
+function GetIngredientData(): IngredientsBase
+    return IngredientData
 end
 
 

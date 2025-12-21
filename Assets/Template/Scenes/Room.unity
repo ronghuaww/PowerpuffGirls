@@ -19734,6 +19734,7 @@ GameObject:
   - component: {fileID: 897726493}
   - component: {fileID: 897726492}
   - component: {fileID: 897726496}
+  - component: {fileID: 897726497}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -19861,6 +19862,33 @@ MonoBehaviour:
   _uiOutputSettings:
     rid: -2
   m_inventoryHUD: {fileID: 1991089756}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!114 &897726497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897726491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee086c38c68f40100c81f189e85fcd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _networkId: 0
+  _script: {fileID: -974389366465450183, guid: 743f861636b7f4d4ba171fcd245afc01, type: 3}
+  _properties: []
+  _uiOutput: 0
+  _uiOutputSettings:
+    rid: -2
+  m_snugglinPrefab: {fileID: 2446417508264423873, guid: 27516d4f695630241a70c2308a3217b1,
+    type: 3}
+  m_spawnPointOBJ: {fileID: 0}
+  m_sittingPointsOBJ: []
   references:
     version: 2
     RefIds:

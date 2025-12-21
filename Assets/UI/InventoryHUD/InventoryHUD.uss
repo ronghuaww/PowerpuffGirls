@@ -7,8 +7,6 @@
 }
 
 .inventory-panel {
-  background-color: rgba(0, 0, 0, 0.75);
-  margin: 0px 10px;
 }
 
 .inventory-title {
@@ -39,12 +37,14 @@
 .ingredient-slot {
   width: 60px;
   height: 60px;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #fdf4d7; 
   border-radius: 100px;
   margin-right: 10px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  border-color: #dd9061;
+  border-width: 5px;
 }
 
 .ingredient-slot:hover {
@@ -58,8 +58,8 @@
 }
 
 .ingredient-icon {
-  width: 40px;
-  height: 40px;
+  width: 37px;
+  height: 37px;
 }
 
 .ingredient-label {

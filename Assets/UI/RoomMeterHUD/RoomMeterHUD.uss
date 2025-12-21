@@ -17,16 +17,17 @@
   font-size: 10px;
   color: #a3592b;
   -unity-font-style: bold;
-  margin-bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #FFECDE;
   border-radius: 10px;
-  padding: 4px 8px;
+  padding: 4px 4px;
 
   
   -unity-text-align: upper-center;
+  -unity-font-style: bold;
   width: 65px; 
   white-space: normal;
-
+  border-color: #dd9061;
+  border-width: 3px;
 }
 
 .meter-bar-wrapper {
@@ -37,7 +38,7 @@
   /* border-width: 4px; */
   /* border-color: #dd9061; */
   padding-bottom: 10px;
-  padding-top: 10px;
+  padding-top: 5px;
   margin-right: 10px;
   border-radius: 10px;
 
@@ -62,12 +63,14 @@
 }
 
 .meter-bar-vertical {
-  width: 17px;
+  width: 20px;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   flex-direction: column;
   margin-left: 20px;
+  border-color: #dd9061;
+  border-width: 3px;
 }
 
 .meter-section {

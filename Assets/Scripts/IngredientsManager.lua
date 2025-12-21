@@ -17,10 +17,29 @@ local SendIngredientToPlayerEvent = Event.new("SendIngredientToPlayerEvent")
 function SpawnIngredient(ingredientBase: IngredientsBase, player: Player, itemIndex: number)
     local ingredientPrefab = ingredientBase.GetPrefab()
     if ingredientPrefab then
-        local playerHeadPos = player.character.transform.position + Vector3.new(0, 3, 0) + (Vector3.new(0, 0.6, 0) * itemIndex)
+        local playerHeadPos = player.character.transform.position + Vector3.new(0, 3, 0) + (Vector3.new(0, .9, 0) * itemIndex)
         local ingredientInstance = GameObject.Instantiate(ingredientPrefab, playerHeadPos, Quaternion.identity)
         ingredientInstance.tag = "HeldItem"
         ingredientInstance.transform.parent = player.character.transform
+    end
+end
+
+function UpdateHeldItemPositions(player: Player)
+    -- destroy all held game objects 
+    if not player.character then return end
+    for i = player.character.transform.childCount - 1, 0, -1 do
+        local child = player.character.transform:GetChild(i)
+        if child.tag == "HeldItem" then
+            GameObject.Destroy(child.gameObject)
+        end
+    end
+    -- re-add held items in correct positions
+    local heldItems = playerTracker.GetPlayerHeldItems(player)
+    for index, itemName in ipairs(heldItems) do
+        local ingredientData = ordersManager.getIngredientByName(itemName)
+        if ingredientData then
+            SpawnIngredient(ingredientData, player, index)
+        end
     end
 end
 
@@ -108,8 +127,14 @@ function self:ClientAwake()
             for i = character.transform.childCount - 1, 0, -1 do
                 local child = character.transform:GetChild(i)
                 if child.tag == "HeldItem" then
-                    GameObject.Destroy(child.gameObject)
-                    return
+                    local childIngredient = child:GetComponent(IngredientTapped)
+                    print("Checking held item: " .. childIngredient.GetIngredientData().GetName(), " against " .. itemName)
+                    if childIngredient.GetIngredientData().GetName() == itemName then
+                        print("Removed held item: " .. itemName)
+                        UpdateHeldItemPositions(player)
+                        GameObject.Destroy(child.gameObject)
+                        return
+                    end
                 end
             end
         end
@@ -192,6 +217,7 @@ function self:ServerAwake()
                 -- remove the item from held items
                 playerTracker.RemoveHeldItem(player, itemName)
                 RemoveHeldItemEvent:FireAllClients(player, itemName)
+                
             end
         end
 

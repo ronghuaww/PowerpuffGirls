@@ -68,6 +68,7 @@ local function createIngredientSlot(ingredientData: IngredientsBase, index: numb
 
     local _icon = Image.new()
     _icon.image = ingredientData.GetIcon().texture
+    _icon:AddToClassList(IngredientIconClass)
 
     _slot:Add(_icon)
 
