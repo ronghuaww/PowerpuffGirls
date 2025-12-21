@@ -142,7 +142,6 @@ function SpawnAtPosition(rarity: string): GameObject | nil
     end
 
     local _spawnedNpc = Object.Instantiate(snugglinPrefab, spawnPos, Quaternion.identity)
-    _spawnedNpc.tag = "Snugglins"
     local _character = getCharacterFromGameObject(_spawnedNpc)
     if not _character then return nil end
     local _snugglins = GetSnugglinBasedRarity(rarity)
@@ -295,48 +294,46 @@ end
 function self:ServerAwake()
     CompletedOrderRequest:Connect(function(player)
         -- Increase room score
-        _roomScore = _roomScore + 20
-        local snugglinCount = math.floor(_roomScore / 20) + 1
-        print("Room score increased to: " .. _roomScore .. ", updating snugglins to count: " .. snugglinCount)
-        UpdateSnugglinCountEvent:FireAllClients(snugglinCount, _roomScore)
+        _roomScore = _roomScore + 30
+        UpdateSnugglinCountEvent:FireAllClients(_roomScore, true)
         -- Update snugglin count based on score
     end)
-
-
     Timer.Every(1, function()  
         -- decerment room score over time
-        local currentSnugglinCount = #GameObject.FindGameObjectsWithTag("Snugglins")
-
-        _roomScore = math.max(0, _roomScore - 1) 
-
-        local newSnugglinCount = math.ceil(_roomScore / 20)
-
-        if newSnugglinCount <= 0 then newSnugglinCount = 1 end
-
-        print("Room score decreased to: " .. _roomScore .. ", current snugglin count: " .. currentSnugglinCount .. ", new snugglin count: " .. newSnugglinCount)
-
-        if newSnugglinCount ~= currentSnugglinCount then
-            print("Room score decreased to: " .. _roomScore .. ", updating snugglins to count: " .. newSnugglinCount)
-            UpdateSnugglinCountEvent:FireAllClients(newSnugglinCount, _roomScore)
-        end
-
+        _roomScore = math.max(1, _roomScore - 1) 
+        UpdateSnugglinCountEvent:FireAllClients(_roomScore, false)
     end)
 end
 
 
 function self:ClientStart()
     -- Client-side initialization if needed
-    UpdateSnugglinCountEvent:Connect(function(snugglinCount: number, roomScore: number)
+    UpdateSnugglinCountEvent:Connect(function(roomScore: number, increased: boolean)
+        local snugglinCount = math.floor(roomScore / 20)
+        local currentSnugglinCount = #GameObject.FindGameObjectsWithTag("Snugglins")
+
+        if not increased then
+            snugglinCount = math.ceil(_roomScore / 20)
+            print("Room score decreased to: " .. snugglinCount, currentSnugglinCount)
+
+            if snugglinCount == currentSnugglinCount then
+                return
+            end
+        end
+
+
+
+        roomMeterHUD.SetValue(_roomScore)
+
         _roomScore = roomScore
         if _roomScore >= LENDARY_TRESHOLD then
             UpdateSnugglinCount(snugglinCount, "Leg")
-            roomMeterHUD.SetValue(_roomScore)
+            
         elseif _roomScore >= EPIC_TRESHOLD then
             UpdateSnugglinCount(snugglinCount, "Epic")
-            roomMeterHUD.SetValue(_roomScore)
+            
         else
             UpdateSnugglinCount(snugglinCount, "Rare")
-            roomMeterHUD.SetValue(_roomScore)
         end
     end)
 end
