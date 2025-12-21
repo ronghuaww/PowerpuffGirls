@@ -41,6 +41,14 @@
     {
       "Id": "body-pet_snugglins2025bodyrare02",
       "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025headrare01",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglins2025bodyrare01",
+      "Color": 0
     }
   ]
 }

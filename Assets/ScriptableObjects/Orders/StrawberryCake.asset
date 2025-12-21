@@ -15,7 +15,7 @@ MonoBehaviour:
   _script: {fileID: -974389366465450183, guid: 99f1d7bb5d7925542ba381d0a7322a4f, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: 
+  m_name: Strawberry Cake
   m_ingredients:
   - {fileID: 11400000, guid: 6b0e6d2ae06da4474a10c77da47dd352, type: 2}
   - {fileID: 11400000, guid: cdeedf891b5664d66acf1c28e7ff4fa4, type: 2}

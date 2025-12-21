@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 232ed76ee7a62581917c81051ded2a9a, type: 3}
-  m_Name: CarrotCake
+  m_Name: Baguette
   m_EditorClassIdentifier: 
   _script: {fileID: -974389366465450183, guid: 99f1d7bb5d7925542ba381d0a7322a4f, type: 3}
   _networkId: 1339080641
   _properties: []
-  m_name: Carrot Cake
+  m_name: Baguette
   m_ingredients:
-  - {fileID: 11400000, guid: e46b253cee3d157438b46574821321e7, type: 2}
+  - {fileID: 11400000, guid: 6c396309670974f3ebdc38afda7119e8, type: 2}
   - {fileID: 11400000, guid: cd692e8f6ba2fed46b38384df927a043, type: 2}
-  - {fileID: 11400000, guid: cd692e8f6ba2fed46b38384df927a043, type: 2}
-  m_icon: {fileID: 21300000, guid: 1a0076cde25234f7eae5c14897e1bf84, type: 3}
+  - {fileID: 11400000, guid: 6b0e6d2ae06da4474a10c77da47dd352, type: 2}
+  m_icon: {fileID: 21300000, guid: f28f7147f57d84330856088fe0e6e0db, type: 3}
   m_prefab: {fileID: 919132149155446097, guid: 3d25c03f3030b4aa289897ecd7537827, type: 3}
   references:
     version: 2

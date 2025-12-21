@@ -31,10 +31,6 @@
       "Color": 0
     },
     {
-      "Id": "body-pet_snugglinstwo2025accessoryleopard",
-      "Color": 0
-    },
-    {
       "Id": "body-pet_snugglins2025colorpatch22",
       "Color": 0
     },
@@ -44,6 +40,10 @@
     },
     {
       "Id": "body-pet_snugglinstwo2025headleopard",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025accessoryleopard",
       "Color": 0
     }
   ]
