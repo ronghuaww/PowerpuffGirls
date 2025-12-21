@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="UnityEngine.UIElements"
+    xmlns:hr="Highrise.UI"
+    xmlns:editor="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd"
+>
+  <hr:UILuaView name="_loadingScreen" class="loading-screen" picking-mode="Ignore">
+    <VisualElement name="_loadingBackground" class="loading-background" picking-mode="Ignore"/>
+    <Label text="Loading..." class="loading-text" picking-mode="Ignore"/>
+  </hr:UILuaView>
+</UXML>

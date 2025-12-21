@@ -162,22 +162,13 @@ end
 -- Makes the Snugglin NPC walk to a random available anchor and sit
 -- Returns true if movement was initiated successfully
 function WalkAndSitAtRandomAnchor(snugglinObject: GameObject, callback: ((...any) -> (...any))?): boolean
-    if not snugglinObject then
-        print("ERROR: No snugglinObject provided to WalkAndSitAtRandomAnchor")
-        return false
-    end
+    if not snugglinObject then return false end
 
     local _character = getCharacterFromGameObject(snugglinObject)
-    if not _character then
-        print("ERROR: Snugglin does not have a Character component")
-        return false
-    end
+    if not _character then return false end
 
     local _anchor = getRandomSittingAnchor()
-    if not _anchor then
-        print("ERROR: No available sitting anchors")
-        return false
-    end
+    if not _anchor then return false end
 
     -- Walk near the anchor's enter position, then jump and sit
     local _enterPos = _anchor.enterFromPosition
@@ -208,16 +199,10 @@ end
 
 -- Makes the Snugglin jump off anchor, walk back to spawn, and destroy
 function WalkBackToSpawnAndDespawn(snugglinObject: GameObject, callback: ((...any) -> (...any))?): boolean
-    if not snugglinObject then
-        print("ERROR: No snugglinObject provided to WalkBackToSpawnAndDespawn")
-        return false
-    end
+    if not snugglinObject then return false end
 
     local _character = getCharacterFromGameObject(snugglinObject)
-    if not _character then
-        print("ERROR: Snugglin does not have a Character component")
-        return false
-    end
+    if not _character then return false end
 
     local _spawnPos = spawnPointOBJ.transform.position
 
@@ -242,10 +227,7 @@ end
 
 -- Destroys a spawned Snugglin NPC
 function DespawnSnugglin(snugglinObject: GameObject): boolean
-    if not snugglinObject then
-        print("ERROR: No snugglinObject provided to DespawnSnugglin")
-        return false
-    end
+    if not snugglinObject then return false end
 
     for i, snugglin in ipairs(_spawnedSnugglins) do
         if snugglin == snugglinObject then
@@ -298,9 +280,9 @@ function self:ServerAwake()
         UpdateSnugglinCountEvent:FireAllClients(_roomScore, true)
         -- Update snugglin count based on score
     end)
-    Timer.Every(1, function()  
+    Timer.Every(3, function()  
         -- decerment room score over time
-        _roomScore = math.max(1, _roomScore - 1) 
+        _roomScore = math.max(1, _roomScore - 3) 
         UpdateSnugglinCountEvent:FireAllClients(_roomScore, false)
     end)
 end
@@ -309,6 +291,8 @@ end
 function self:ClientStart()
     -- Client-side initialization if needed
     UpdateSnugglinCountEvent:Connect(function(roomScore: number, increased: boolean)
+        print("Updating snugglin count based on room score: " .. roomScore)
+        
         local snugglinCount = math.floor(roomScore / 20)
         local currentSnugglinCount = #GameObject.FindGameObjectsWithTag("Snugglins")
 
@@ -324,6 +308,8 @@ function self:ClientStart()
 
 
         roomMeterHUD.SetValue(_roomScore)
+
+        if snugglinCount <= 0 then snugglinCount = 1 end
 
         _roomScore = roomScore
         if _roomScore >= LENDARY_TRESHOLD then

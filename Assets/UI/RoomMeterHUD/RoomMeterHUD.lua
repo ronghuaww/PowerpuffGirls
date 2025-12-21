@@ -77,11 +77,3 @@ function SubtractValue(amount: number)
     SetValue(currentValue - amount)
 end
 
---------------------------------
-------  LIFECYCLE HOOKS   ------
---------------------------------
-function self:Start()
-    print("RoomMeterHUD: Initialized")
-    
-    -- Initialize at 50%
-end

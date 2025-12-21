@@ -1,6 +1,7 @@
 --!Type(UI)
 local ordersManager = require("OrdersManager")
 local ingredientsManager = require("IngredientsManager")
+local audioManager = require("AudioManager")
 
 
 --------------------------------
@@ -52,7 +53,7 @@ local function selectSlot(slotIndex: number, ingredient: string)
         inventorySlots[slotIndex]:AddToClassList(IngredientSlotSelectedClass)
     end
 
-    print("Selected ingredient: " .. (ingredient or "none"))
+   -- print("Selected ingredient: " .. (ingredient or "none"))
 end
 
 local function createIngredientSlot(ingredientData: IngredientsBase, index: number) : VisualElement
@@ -75,6 +76,7 @@ local function createIngredientSlot(ingredientData: IngredientsBase, index: numb
     _slot:RegisterPressCallback(function()
         --ingredientsManager.AddHeldItemRequest:FireServer(ingredientData.GetName())
         -- listen if the player taps themselves or someone else
+        audioManager.PlayButtonClick()
         ingredientsManager.AddSelectedItemRequest:FireServer(ingredientData.GetName())
 
         -- spawn the game asset on the players head 
@@ -87,10 +89,7 @@ end
 function UpdateInventoryDisplay(inventory: {string})
     clearInventory()
 
-    if not _inventoryContainer then
-        print("ERROR: _inventoryContainer is nil")
-        return
-    end
+    if not _inventoryContainer then return end
 
     for i, item in ipairs(inventory) do
         local ingredientData = ordersManager.getIngredientByName(item)

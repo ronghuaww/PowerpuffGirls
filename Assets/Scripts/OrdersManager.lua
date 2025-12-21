@@ -1,6 +1,7 @@
 --!Type(Module)
 local playerTracker = require("PlayerTracker")
 local snugglinManager = require("SnugglinManager")
+local audioManager = require("AudioManager")
 
 
 --!SerializeField
@@ -11,6 +12,9 @@ local GameHUD: GameHUD = nil
 
 --!SerializeField
 local CounterObject: GameObject = nil
+
+--!SerializeField
+local OrderCompleteVFX: GameObject = nil
 
 
 
@@ -49,7 +53,7 @@ local function getIngredientNames(order: OrdersBase): {string}
     local _names = {}
     local _ingredients = order.GetIngredients()
     for _, ingredient in ipairs(_ingredients) do
-        print("Found ingredient: " .. ingredient.GetName())
+--        print("Found ingredient: " .. ingredient.GetName())
         table.insert(_names, ingredient.GetName())
     end
     return _names
@@ -172,6 +176,23 @@ function self:ClientAwake()
 
         local pos = CounterObject.transform.position + Vector3.new(0, 1.7, 0)
         local orderPrefabInstance = Object.Instantiate(order.GetPrefab(), pos, Quaternion.identity)
+
+        -- add vfx 
+        if OrderCompleteVFX then
+            local vfxInstance = Object.Instantiate(OrderCompleteVFX, pos, Quaternion.identity)
+            if vfxInstance.gameObject:GetComponent(ParticleSystem) then
+                vfxInstance.gameObject:GetComponent(ParticleSystem):Stop()
+                vfxInstance.gameObject:GetComponent(ParticleSystem):Clear()
+                vfxInstance.gameObject:GetComponent(ParticleSystem):Play()
+            end
+
+            Timer.After(3.0, function()
+                GameObject.Destroy(vfxInstance)
+            end)
+        end
+
+        -- add sfx
+        audioManager.PlaySubmitOrder()
 
         Timer.After(5.0, function()
             GameObject.Destroy(orderPrefabInstance)

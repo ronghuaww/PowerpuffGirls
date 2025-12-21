@@ -119,5 +119,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _checkDistance: 0
   _distance: 1
-  _moveTo: 0
+  _moveTo: 1
   _moveTarget: {fileID: 0}

@@ -2,6 +2,7 @@
 
 local playerTracker = require("PlayerTracker")
 local ordersManager = require("OrdersManager")
+local audioManager = require("AudioManager")
 
 AddHeldItemRequest = Event.new("AddHeldItemRequest")
 AddSelectedItemRequest = Event.new("AddSelectedItemRequest")
@@ -49,29 +50,31 @@ end
 function SendIngredientToPlayer(ingredientName: string, playerSent: Player, playerReceive: Player)
     -- Get ingredient data
     local _ingredientData = ordersManager.getIngredientByName(ingredientName)
-    if not _ingredientData then
-        print("ERROR: Ingredient not found: " .. ingredientName)
-        return
-    end
+    if not _ingredientData then return end
 
     -- Get prefab
     local _prefab = _ingredientData.GetPrefab()
-    if not _prefab then
-        print("ERROR: No prefab for ingredient: " .. ingredientName)
-        return
-    end
+    if not _prefab then return end
 
     -- Get start and end positions from player characters
-    if not playerSent.character or not playerReceive.character then
-        print("ERROR: Player character not found")
-        return
-    end
+    if not playerSent.character or not playerReceive.character then return end
 
     local _startPos = playerSent.character.transform.position + Vector3.new(0, 2, 0)
     local _endPos = playerReceive.character.transform.position + Vector3.new(0, 2, 0)
 
     -- Spawn the ingredient object
     local _spawnedObject = Object.Instantiate(_prefab, _startPos, Quaternion.identity)
+
+    if _spawnedObject.transform:Find("SparklyTrail") then
+        local burstEffect = _spawnedObject.transform:Find("SparklyTrail")
+        burstEffect.gameObject:SetActive(true)
+        if burstEffect.gameObject:GetComponent(ParticleSystem) then
+            burstEffect.gameObject:GetComponent(ParticleSystem):Stop()
+            burstEffect.gameObject:GetComponent(ParticleSystem):Clear()
+            burstEffect.gameObject:GetComponent(ParticleSystem):Play()
+        end
+    end
+
 
     -- Tween with arc using sin curve
     Tween.FromTo(0, 1, function(progress)
@@ -86,24 +89,47 @@ function SendIngredientToPlayer(ingredientName: string, playerSent: Player, play
     :EaseInOutQuadratic()
     :OnStop(function()
         if _spawnedObject then
-            Object.Destroy(_spawnedObject)
+
+            -- Play burst effect on arrival
+            if _spawnedObject.transform:Find("SparklyBurst") then
+                local burstEffect = _spawnedObject.transform:Find("SparklyBurst")
+                burstEffect.gameObject:SetActive(true)
+                if burstEffect.gameObject:GetComponent(ParticleSystem) then
+                    burstEffect.gameObject:GetComponent(ParticleSystem):Stop()
+                    burstEffect.gameObject:GetComponent(ParticleSystem):Clear()
+                    burstEffect.gameObject:GetComponent(ParticleSystem):Play()
+                end
+            end
+
+            -- sound effect
+            audioManager.PlaySendIngredient()
+
+
+            --remove model from child objects
+            for i = _spawnedObject.transform.childCount - 1, 0, -1 do
+                local child = _spawnedObject.transform:GetChild(i)
+                if child.name ~= "SparklyBurst" and child.name ~= "SparklyTrail" then
+                    GameObject.Destroy(child.gameObject)
+                end
+            end
+
+            Timer.After(1.0, function()
+                if _spawnedObject then
+                    GameObject.Destroy(_spawnedObject)
+                end
+            end)
         end
     end)
     :Play()
-
-    print("Sending " .. ingredientName .. " from " .. playerSent.name .. " to " .. playerReceive.name)
 end
 
 
 function self:ClientAwake()
     -- Client-side initialization if needed
     AddHeldItemEvent:Connect(function(player, itemName: string, itemIndex: number)
-        print("Client received request to add held item: " .. itemName)
         local ingredientData = ordersManager.getIngredientByName(itemName)
         if ingredientData then
             SpawnIngredient(ingredientData, player, itemIndex)
-        else
-            print("Ingredient data not found for: " .. itemName)
         end
     end)
 
@@ -128,9 +154,7 @@ function self:ClientAwake()
                 local child = character.transform:GetChild(i)
                 if child.tag == "HeldItem" then
                     local childIngredient = child:GetComponent(IngredientTapped)
-                    print("Checking held item: " .. childIngredient.GetIngredientData().GetName(), " against " .. itemName)
                     if childIngredient.GetIngredientData().GetName() == itemName then
-                        print("Removed held item: " .. itemName)
                         UpdateHeldItemPositions(player)
                         GameObject.Destroy(child.gameObject)
                         return
@@ -150,7 +174,6 @@ function self:ServerAwake()
     -- Server-side initialization if needed
     AddHeldItemRequest:Connect(function(player: Player, itemName: string)
         local playerInventory = playerTracker.GetPlayerInventory(player)
-        print("Player " .. player.name .. " inventory has " .. #playerInventory .. " items.")
         -- check to see if the player has the item in their inventory
         local hasItem = false
         for i, item in ipairs(playerInventory) do
@@ -161,7 +184,6 @@ function self:ServerAwake()
         end
 
         if hasItem then
-            print("Player " .. player.name .. " used item: " .. itemName)
             playerTracker.AddHeldItem(player, itemName)
             local heldItems = playerTracker.GetPlayerHeldItems(player)
             AddHeldItemEvent:FireAllClients(player, itemName, #heldItems)
@@ -171,7 +193,6 @@ function self:ServerAwake()
     IsOrderCompletedRequest:Connect(function(player: Player)
         local ifOrderCompleted = ordersManager.checkOrderCompleted(player)
         if ifOrderCompleted then
-            print("Player " .. player.name .. " has completed their order!")
             Timer.After(0.5, function()
                 playerTracker.players[player].heldItems.value = {}
 
@@ -194,32 +215,26 @@ function self:ServerAwake()
 
     AddItemInventoryRequest:Connect(function(player: Player, updatePlayer: Player, itemName: string)
         local playerInventory = playerTracker.GetPlayerInventory(player)
-        print("Player " .. player.name .. " inventory has " .. #playerInventory .. " items.")
 
         -- if player are sending each other items
         if player ~= updatePlayer then
-            print("Player " .. player.name .. " is sending item: " .. itemName .. " to player " .. updatePlayer.name)
             -- check to see if the player has the item in their inventory
             local isInInventory = playerTracker.IsItemInInventory(player, itemName)
             if isInInventory then
                 playerTracker.AddItemToInventory(updatePlayer, itemName)
                 SendIngredientToPlayerEvent:FireAllClients(itemName, player, updatePlayer)
-                print("Added item " .. itemName .. " to player " .. updatePlayer.name .. "'s inventory.")
                 -- remove the item from the original player's inventory
                 playerTracker.RemoveFromInventory(player, itemName)
             end
         else
-            print("Player " .. player.name .. " is adding item: " .. itemName .. " to their own inventory")
             -- see if the item is in their hands 
             if playerTracker.IsItemInHeldItems(player, itemName) then
                 playerTracker.AddItemToInventory(player, itemName)
-                print("Added item " .. itemName .. " to player " .. player.name .. "'s inventory from held items.")
                 -- remove the item from held items
                 playerTracker.RemoveHeldItem(player, itemName)
                 RemoveHeldItemEvent:FireAllClients(player, itemName)
                 
             end
         end
-
     end)
 end

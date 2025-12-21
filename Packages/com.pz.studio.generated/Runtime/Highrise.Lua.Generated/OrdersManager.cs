@@ -31,6 +31,7 @@ namespace Highrise.Lua.Generated
         [LuaScriptPropertyAttribute("553105638870fa04d8f87070d9067d8a")]
         [SerializeField] public UnityEngine.Object m_GameHUD = default;
         [SerializeField] public UnityEngine.GameObject m_CounterObject = default;
+        [SerializeField] public UnityEngine.GameObject m_OrderCompleteVFX = default;
 
         protected override SerializedPropertyValue[] SerializeProperties()
         {
@@ -42,6 +43,7 @@ namespace Highrise.Lua.Generated
                 CreateSerializedProperty(_script.GetPropertyAt(0), m_OrdersList),
                 CreateSerializedProperty(_script.GetPropertyAt(1), m_GameHUD),
                 CreateSerializedProperty(_script.GetPropertyAt(2), m_CounterObject),
+                CreateSerializedProperty(_script.GetPropertyAt(3), m_OrderCompleteVFX),
             };
         }
         
