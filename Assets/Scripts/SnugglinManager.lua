@@ -1,5 +1,7 @@
 --!Type(Module)
 
+local audioManager = require("AudioManager")
+
 --------------------------------
 ------  SERIALIZED FIELDS ------
 --------------------------------
@@ -31,6 +33,8 @@ local LENDARY_TRESHOLD = 400
 
 local _roomScore: number = 0
 
+
+local _roomRarity = "rare"
 
 
 
@@ -287,8 +291,19 @@ function self:ServerAwake()
     end)
 end
 
+function updateRoomRarity(newRarity: string)
+    if newRarity == _roomRarity then
+        return
+    end
+
+    _roomRarity = newRarity
+    audioManager.PlayingMusic(newRarity, true)
+end
+
 
 function self:ClientStart()
+    audioManager.PlayingMusic(_roomRarity, true)
+
     -- Client-side initialization if needed
     UpdateSnugglinCountEvent:Connect(function(roomScore: number, increased: boolean)
         print("Updating snugglin count based on room score: " .. roomScore)
@@ -299,27 +314,31 @@ function self:ClientStart()
         if not increased then
             snugglinCount = math.ceil(_roomScore / 20)
             print("Room score decreased to: " .. snugglinCount, currentSnugglinCount)
-
-            if snugglinCount == currentSnugglinCount then
-                return
-            end
         end
 
-
+        if snugglinCount == currentSnugglinCount and snugglinCount ~= 0 then
+            return
+        end
 
         roomMeterHUD.SetValue(_roomScore)
 
-        if snugglinCount <= 0 then snugglinCount = 1 end
+        if snugglinCount <= 0 then 
+            snugglinCount = 1 
+            print("Ensuring at least one snugglin is present")
+        end
 
         _roomScore = roomScore
         if _roomScore >= LENDARY_TRESHOLD then
             UpdateSnugglinCount(snugglinCount, "Leg")
+            updateRoomRarity("legendary")
             
         elseif _roomScore >= EPIC_TRESHOLD then
             UpdateSnugglinCount(snugglinCount, "Epic")
+            updateRoomRarity("epic")
             
         else
             UpdateSnugglinCount(snugglinCount, "Rare")
+            updateRoomRarity("rare")
         end
     end)
 end

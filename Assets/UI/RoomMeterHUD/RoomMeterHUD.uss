@@ -24,7 +24,7 @@
   
   -unity-text-align: upper-center;
   -unity-font-style: bold;
-  width: 65px; 
+  width: 70px; 
   white-space: normal;
   border-color: #dd9061;
   border-width: 3px;

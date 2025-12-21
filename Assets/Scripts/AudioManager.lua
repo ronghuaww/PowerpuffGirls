@@ -138,9 +138,3 @@ end
 function self:ClientAwake()
     Audio.musicVolume = musicVolume
 end
-
-
-function self:ClientStart()
-    -- Fade in background music on start
-    PlayingMusic(BGM_RARE, false)
-end 
