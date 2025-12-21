@@ -31,10 +31,6 @@
       "Color": 0
     },
     {
-      "Id": "body-pet_snugglinstwo2025accessoryalienhelmet",
-      "Color": 0
-    },
-    {
       "Id": "body-pet_snugglins2025colorpatch16",
       "Color": 0
     },
@@ -44,6 +40,10 @@
     },
     {
       "Id": "body-pet_snugglinstwo2025bodyalien",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025accessoryalienhelmet",
       "Color": 0
     }
   ]

@@ -39,15 +39,15 @@
       "Color": 0
     },
     {
-      "Id": "body-pet_snugglinstwo2025shirtplantcat",
-      "Color": 0
-    },
-    {
       "Id": "body-pet_snugglinstwo2025headplantcat",
       "Color": 0
     },
     {
       "Id": "body-pet_snugglinstwo2025bodyplantcat",
+      "Color": 0
+    },
+    {
+      "Id": "body-pet_snugglinstwo2025shirtplantcat",
       "Color": 0
     }
   ]
