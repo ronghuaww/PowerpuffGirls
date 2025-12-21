@@ -10,24 +10,24 @@
 
     <!-- Meter Container (Top Right) -->
     <VisualElement class="meter-container" picking-mode="Ignore">
-      <Label name="_meterLabel" text="Cafe Popularity" class="meter-label"/>
+      <Label name="_meterLabel" text="Cafe Popularity" class="meter-label" picking-mode="Ignore" />
       
       <!-- Vertical Bar with Sections -->
-      <VisualElement class="meter-bar-wrapper">
+      <VisualElement class="meter-bar-wrapper" picking-mode="Ignore">
         
         <!-- Arrow Indicator -->
-        <VisualElement name="_arrowIndicator" class="arrow-indicator">
-          <Label text="▶" class="arrow-icon"/>
+        <VisualElement name="_arrowIndicator" class="arrow-indicator" picking-mode="Ignore">
+          <Label text="▶" class="arrow-icon" picking-mode="Ignore"/>
         </VisualElement>
         
         <!-- Vertical Bar -->
-        <VisualElement class="meter-bar-vertical">
+        <VisualElement class="meter-bar-vertical" picking-mode="Ignore">
           <!-- Yellow Section (Top) -->
-          <VisualElement class="meter-section meter-section-yellow"/>
+          <VisualElement class="meter-section meter-section-yellow" picking-mode="Ignore"/>
           <!-- Blue Section (Middle) -->
-          <VisualElement class="meter-section meter-section-blue"/>
+          <VisualElement class="meter-section meter-section-blue" picking-mode="Ignore"/>
           <!-- Red Section (Bottom) -->
-          <VisualElement class="meter-section meter-section-red"/>
+          <VisualElement class="meter-section meter-section-red" picking-mode="Ignore"/>
         </VisualElement>
         
       </VisualElement>

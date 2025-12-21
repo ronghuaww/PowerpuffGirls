@@ -19,10 +19,7 @@ local IngredientIconsClass = "ingredient-icons"
 --!Bind
 local _ordersContainer: VisualElement = nil
 --!Bind
-local _statusMessage: Label = nil
---!Bind
 local _orderLabel: Label = nil
-
 --!Bind
 local _orderIcon: VisualElement = nil
 

@@ -9,11 +9,11 @@
   <hr:UILuaView class="inventory-hud" picking-mode="Ignore">
 
     <!-- Inventory Panel at Bottom -->
-    <VisualElement class="inventory-panel">
+    <VisualElement class="inventory-panel" picking-mode="Ignore">
 
       <!-- Horizontal Scroll Container -->
-      <hr:UIScrollView name="_inventoryScroll" class="inventory-scroll" mode="Horizontal">
-        <VisualElement name="_inventoryContainer" class="inventory-container"/>
+      <hr:UIScrollView name="_inventoryScroll" class="inventory-scroll" mode="Horizontal" picking-mode="Ignore">
+        <VisualElement name="_inventoryContainer" class="inventory-container" picking-mode="Ignore"/>
       </hr:UIScrollView>
     </VisualElement>
 

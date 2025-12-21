@@ -8,19 +8,6 @@
 >
   <hr:UILuaView class="game-hud" picking-mode="Ignore">
 
-    <!-- Top Bar: Score and Timer
-    <VisualElement class="top-bar" picking-mode="Ignore">
-      <VisualElement class="score-container" picking-mode="Ignore">
-        <Label name="_scoreLabel" text="Score: 0" class="score-label"/>
-      </VisualElement>
-
-      <VisualElement class="timer-container" picking-mode="Ignore">
-        <Label name="_timerLabel" text="3:00" class="timer-label"/>
-      </VisualElement>
-
-      <VisualElement class="spacer" picking-mode="Ignore"/>
-    </VisualElement> -->
-
     <!-- Orders Panel (Left Side) -->
     <VisualElement class="orders-parent" picking-mode="Ignore">
       <VisualElement class="orders-panel" picking-mode="Ignore">
@@ -29,11 +16,6 @@
         <Label text="—" class="dash-label" picking-mode="Ignore"/>
         <VisualElement name="_ordersContainer" class="orders-container" picking-mode="Ignore"/>
       </VisualElement>
-    </VisualElement>
-
-    <!-- Game Status Message (Center) -->
-    <VisualElement class="center-message-container" picking-mode="Ignore">
-      <Label name="_statusMessage" text="" class="status-message"/>
     </VisualElement>
 
   </hr:UILuaView>

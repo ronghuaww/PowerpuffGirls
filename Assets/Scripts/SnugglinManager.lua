@@ -20,13 +20,16 @@ local snugglinData: {SnugglinBase} = nil
 --!SerializeField
 local roomMeterHUD: RoomMeterHUD = nil
 
+CompletedOrderRequest = Event.new("CompletedOrderRequest")
+UpdateSnugglinCountEvent = Event.new("UpdateSnugglinCountEvent")
+
 
 
 
 local EPIC_TRESHOLD = 200
 local LENDARY_TRESHOLD = 400
 
-local _roomScore = 0
+local _roomScore: number = 0
 
 
 
@@ -44,7 +47,7 @@ local _seenSnugglins = {}
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
 
-local function GetSnugglingBasedRarity(rarity: string) : {SnugglinBase}
+local function GetSnugglinBasedRarity(rarity: string) : {SnugglinBase}
     local _filteredSnugglins: {SnugglinBase} = {}
     for _, snugglin in ipairs(snugglinData) do
         if snugglin.GetRarity() == "Rare" then
@@ -68,7 +71,7 @@ local function GetSnugglingBasedRarity(rarity: string) : {SnugglinBase}
 end
 
 function UpdateSnugglinCount(count: number, rarity: string)
-    local _filteredSnugglins = GetSnugglingBasedRarity(rarity)
+    local _filteredSnugglins = GetSnugglinBasedRarity(rarity)
     print("Updating snugglin count to: " .. count .. " of rarity: " .. rarity .. " (" .. #_filteredSnugglins .. " available)")
     
     if #_spawnedSnugglins > count then -- if we have more snugglins than desired, despawn extras
@@ -83,6 +86,7 @@ function UpdateSnugglinCount(count: number, rarity: string)
             WalkAndSitAtRandomAnchor(snugglinObject)
         end
     end
+
 end
 
 
@@ -138,9 +142,12 @@ function SpawnAtPosition(rarity: string): GameObject | nil
     end
 
     local _spawnedNpc = Object.Instantiate(snugglinPrefab, spawnPos, Quaternion.identity)
+    _spawnedNpc.tag = "Snugglins"
     local _character = getCharacterFromGameObject(_spawnedNpc)
     if not _character then return nil end
-    local _snugglinData = GetSnugglingBasedRarity(rarity)
+    local _snugglins = GetSnugglinBasedRarity(rarity)
+    local _randomIndex = math.random(1, #_snugglins)
+    local _snugglinData = _snugglins[_randomIndex]
     if _snugglinData then
         applyOutfitToCharacter(_character, _snugglinData.GetOutfit())
         AddToSeenSnugglins(_snugglinData.GetName())
@@ -286,9 +293,51 @@ function HasSeenSnugglin(snugglinName: string): boolean
 end
 
 function self:ServerAwake()
+    CompletedOrderRequest:Connect(function(player)
+        -- Increase room score
+        _roomScore = _roomScore + 20
+        local snugglinCount = math.floor(_roomScore / 20) + 1
+        print("Room score increased to: " .. _roomScore .. ", updating snugglins to count: " .. snugglinCount)
+        UpdateSnugglinCountEvent:FireAllClients(snugglinCount, _roomScore)
+        -- Update snugglin count based on score
+    end)
+
+
+    Timer.Every(1, function()  
+        -- decerment room score over time
+        local currentSnugglinCount = #GameObject.FindGameObjectsWithTag("Snugglins")
+
+        _roomScore = math.max(0, _roomScore - 1) 
+
+        local newSnugglinCount = math.ceil(_roomScore / 20)
+
+        if newSnugglinCount <= 0 then newSnugglinCount = 1 end
+
+        print("Room score decreased to: " .. _roomScore .. ", current snugglin count: " .. currentSnugglinCount .. ", new snugglin count: " .. newSnugglinCount)
+
+        if newSnugglinCount ~= currentSnugglinCount then
+            print("Room score decreased to: " .. _roomScore .. ", updating snugglins to count: " .. newSnugglinCount)
+            UpdateSnugglinCountEvent:FireAllClients(newSnugglinCount, _roomScore)
+        end
+
+    end)
 end
 
 
 function self:ClientStart()
+    -- Client-side initialization if needed
+    UpdateSnugglinCountEvent:Connect(function(snugglinCount: number, roomScore: number)
+        _roomScore = roomScore
+        if _roomScore >= LENDARY_TRESHOLD then
+            UpdateSnugglinCount(snugglinCount, "Leg")
+            roomMeterHUD.SetValue(_roomScore)
+        elseif _roomScore >= EPIC_TRESHOLD then
+            UpdateSnugglinCount(snugglinCount, "Epic")
+            roomMeterHUD.SetValue(_roomScore)
+        else
+            UpdateSnugglinCount(snugglinCount, "Rare")
+            roomMeterHUD.SetValue(_roomScore)
+        end
+    end)
 end
 

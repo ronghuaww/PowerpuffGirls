@@ -22,20 +22,22 @@ local maxValue: number = 500
 --------------------------------
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
-local function updateArrowPosition()
+local function updateArrowPosition(value: number)
     if not _arrowIndicator then return end
     
     local _percentage = 0
     if maxValue > 0 then
-        _percentage = currentValue / maxValue
+        _percentage = value / maxValue
     end
     _percentage = math.max(0, math.min(1, _percentage))
+
+    print("Updating arrow position: " .. tostring(_percentage * 100) .. "%")
     
     -- Invert percentage since bar goes from top (100%) to bottom (0%)
     local _invertedPercentage = 1 - _percentage
     
     -- Calculate position (0% at bottom, 100% at top)
-    local _position = (_invertedPercentage * BAR_HEIGHT) - 2
+    local _position = (_invertedPercentage * BAR_HEIGHT) + 2
     
     _arrowIndicator.style.top = StyleLength.new(Length.new(_position))
 end
@@ -44,20 +46,9 @@ end
 ------  PUBLIC FUNCTIONS  ------
 --------------------------------
 function SetValue(value: number)
-    currentValue = math.max(0, value)
-    updateArrowPosition()
+    updateArrowPosition(value)
 end
 
-function SetMaxValue(max: number)
-    maxValue = math.max(1, max)
-    updateArrowPosition()
-end
-
-function SetPercentage(percentage: number)
-    percentage = math.max(0, math.min(100, percentage))
-    currentValue = (percentage / 100) * maxValue
-    updateArrowPosition()
-end
 
 function GetValue(): number
     return currentValue
@@ -93,5 +84,4 @@ function self:Start()
     print("RoomMeterHUD: Initialized")
     
     -- Initialize at 50%
-    SetPercentage(100)
 end

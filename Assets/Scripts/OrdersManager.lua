@@ -100,17 +100,17 @@ function AssignOrderToPlayer(player: Player)
             -- First ingredient goes to the main player
             print("Adding to main player: " .. player.name)
             playerTracker.AddItemToInventory(player, ingredient.GetName())
-            continue
-        end
-
-        local randPlayer = playerTracker.GetRandomPlayer()
-        if randPlayer then
-            print("Random player selected: " .. randPlayer.name)
-            playerTracker.AddItemToInventory(randPlayer, ingredient.GetName())
+            
         else
-            -- Fallback to main player if no other players available
-            print("No random player available, adding to main player: " .. player.name)
-            playerTracker.AddItemToInventory(player, ingredient.GetName())
+            local randPlayer = playerTracker.GetRandomPlayer()
+            if randPlayer then
+                print("Random player selected: " .. randPlayer.name)
+                playerTracker.AddItemToInventory(randPlayer, ingredient.GetName())
+            else
+                -- Fallback to main player if no other players available
+                print("No random player available, adding to main player: " .. player.name)
+                playerTracker.AddItemToInventory(player, ingredient.GetName())
+            end
         end
     end
 
@@ -230,6 +230,8 @@ function checkOrderCompleted(player): boolean
             return false
         end
     end
+
+    snugglinManager.CompletedOrderRequest:Fire()
     
     return true
 end
