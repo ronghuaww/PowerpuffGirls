@@ -250,16 +250,16 @@ function GetAllSpawnedSnugglins(): {GameObject}
 end
 
 function AddToSeenSnugglins(snugglinName: string)
-    print("Adding to seen snugglins: " .. snugglinName, _seenSnugglins[snugglinName] == nil)
+    --print("Adding to seen snugglins: " .. snugglinName, _seenSnugglins[snugglinName] == nil)
 
     if not _seenSnugglins[snugglinName] then 
-        print("Revealing snugglin picture frame: " .. snugglinName)
+        --print("Revealing snugglin picture frame: " .. snugglinName)
         -- grab all the objects with the picture frame tag
         local pictureFrames = GameObject.FindGameObjectsWithTag("PictureFrame")
         for _, frame in ipairs(pictureFrames) do
-            print("Checking picture frame: " .. frame.name, frame.name == snugglinName)
+            --print("Checking picture frame: " .. frame.name, frame.name == snugglinName)
             if frame.name == snugglinName then
-                print("Found picture frame for snugglin: " .. snugglinName)
+                --print("Found picture frame for snugglin: " .. snugglinName)
                 -- turn on all children of the frame to make it visible
                 for i = 0, frame.transform.childCount - 1 do
                     local child = frame.transform:GetChild(i)

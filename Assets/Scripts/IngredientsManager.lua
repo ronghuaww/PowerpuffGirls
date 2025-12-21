@@ -25,7 +25,7 @@ function SpawnIngredient(ingredientBase: IngredientsBase, player: Player, itemIn
     end
 end
 
-function UpdateHeldItemPositions(player: Player)
+function UpdateHeldItemPositions(player: Player, heldItems: {string})
     -- destroy all held game objects 
     if not player.character then return end
     for i = player.character.transform.childCount - 1, 0, -1 do
@@ -35,7 +35,6 @@ function UpdateHeldItemPositions(player: Player)
         end
     end
     -- re-add held items in correct positions
-    local heldItems = playerTracker.GetPlayerHeldItems(player)
     for index, itemName in ipairs(heldItems) do
         local ingredientData = ordersManager.getIngredientByName(itemName)
         if ingredientData then
@@ -146,7 +145,7 @@ function self:ClientAwake()
         end
     end)
 
-    RemoveHeldItemEvent:Connect(function(player, itemName: string)
+    RemoveHeldItemEvent:Connect(function(player, itemName: string, heldItems: {string})
         -- Remove specific held item game object from the player's head
         local character = player.character
         if character then
@@ -155,7 +154,7 @@ function self:ClientAwake()
                 if child.tag == "HeldItem" then
                     local childIngredient = child:GetComponent(IngredientTapped)
                     if childIngredient.GetIngredientData().GetName() == itemName then
-                        UpdateHeldItemPositions(player)
+                        UpdateHeldItemPositions(player, heldItems)
                         GameObject.Destroy(child.gameObject)
                         return
                     end
@@ -232,7 +231,8 @@ function self:ServerAwake()
                 playerTracker.AddItemToInventory(player, itemName)
                 -- remove the item from held items
                 playerTracker.RemoveHeldItem(player, itemName)
-                RemoveHeldItemEvent:FireAllClients(player, itemName)
+                local heldItems = playerTracker.GetPlayerHeldItems(player)
+                RemoveHeldItemEvent:FireAllClients(player, itemName, heldItems)
                 
             end
         end
