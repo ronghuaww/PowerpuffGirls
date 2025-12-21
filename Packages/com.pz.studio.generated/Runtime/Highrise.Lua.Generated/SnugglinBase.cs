@@ -26,6 +26,9 @@ namespace Highrise.Lua.Generated
         private const string s_scriptGUID = "b524554a0243acf4fb4bc7a2d97c12b7";
         public override string ScriptGUID => s_scriptGUID;
 
+        [SerializeField] public System.String m_name = "";
+        [SerializeField] public Highrise.CharacterOutfit m_outfit = default;
+        [SerializeField] public System.String m_rarity = "";
 
         protected override SerializedPropertyValue[] SerializeProperties()
         {
@@ -34,6 +37,9 @@ namespace Highrise.Lua.Generated
 
             return new SerializedPropertyValue[]
             {
+                CreateSerializedProperty(_script.GetPropertyAt(0), m_name),
+                CreateSerializedProperty(_script.GetPropertyAt(1), m_outfit),
+                CreateSerializedProperty(_script.GetPropertyAt(2), m_rarity),
             };
         }
         
