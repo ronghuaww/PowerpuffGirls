@@ -23,6 +23,8 @@ local snugglinData: {SnugglinBase} = nil
 
 local _spawnedSnugglins: {GameObject} = {}
 
+local _seenSnugglins = {}
+
 --------------------------------
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
@@ -84,6 +86,7 @@ function SpawnAtPosition(): GameObject | nil
     local _snugglinData = getRandomSnugglinData()
     if _snugglinData then
         applyOutfitToCharacter(_character, _snugglinData.GetOutfit())
+        AddToSeenSnugglins(_snugglinData.GetName())
     end
 
     if _spawnedNpc then
@@ -137,27 +140,6 @@ function WalkAndSitAtRandomAnchor(snugglinObject: GameObject, callback: ((...any
 
     return true
 end
-
--- -- Makes the Snugglin NPC walk to a specific anchor and sit
--- -- Returns true if movement was initiated successfully
--- function WalkAndSitAtAnchor(snugglinObject: GameObject, anchor: Anchor, callback: ((...any) -> (...any))?): boolean
---     if not snugglinObject then
---         print("ERROR: No snugglinObject provided to WalkAndSitAtAnchor")
---         return false
---     end
---     if not anchor then
---         print("ERROR: No anchor provided to WalkAndSitAtAnchor")
---         return false
---     end
-
---     local _character = getCharacterFromGameObject(snugglinObject)
---     if not _character then
---         print("ERROR: Snugglin does not have a Character component")
---         return false
---     end
-
---     return _character:MoveToAnchor(anchor, -1, callback)
--- end
 
 
 
@@ -216,6 +198,14 @@ end
 -- Returns all currently spawned Snugglins
 function GetAllSpawnedSnugglins(): {GameObject}
     return _spawnedSnugglins
+end
+
+function AddToSeenSnugglins(snugglinName: string)
+    _seenSnugglins[snugglinName] = true
+end
+
+function HasSeenSnugglin(snugglinName: string): boolean
+    return _seenSnugglins[snugglinName] == true
 end
 
 
