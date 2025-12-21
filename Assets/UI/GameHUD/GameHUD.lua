@@ -204,26 +204,26 @@ end
 --     end
 -- end
 
-local function showStatusMessage(message: string, duration: number)
-    if _statusMessage then
-        _statusMessage.text = message
-        _statusMessage.style.display = DisplayStyle.Flex
+-- local function showStatusMessage(message: string, duration: number)
+--     if _statusMessage then
+--         _statusMessage.text = message
+--         _statusMessage.style.display = DisplayStyle.Flex
 
-        if duration and duration > 0 then
-            Timer.After(duration, function()
-                if _statusMessage then
-                    _statusMessage.text = ""
-                end
-            end)
-        end
-    end
-end
+--         if duration and duration > 0 then
+--             Timer.After(duration, function()
+--                 if _statusMessage then
+--                     _statusMessage.text = ""
+--                 end
+--             end)
+--         end
+--     end
+-- end
 
 function OrderAssigned(orderName: string, requiredIngredients: {string})
     myOrderName = orderName
     myRequiredIngredients = requiredIngredients
     addOrderDisplay(orderName, requiredIngredients)
-    showStatusMessage("New Order: " .. orderName, 3)
+    --showStatusMessage("New Order: " .. orderName, 3)
     print("Order assigned: " .. orderName)
 end
 

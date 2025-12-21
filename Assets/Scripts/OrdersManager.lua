@@ -1,5 +1,6 @@
 --!Type(Module)
 local playerTracker = require("PlayerTracker")
+local snugglinManager = require("SnugglinManager")
 
 
 --!SerializeField
@@ -10,6 +11,11 @@ local GameHUD: GameHUD = nil
 
 --!SerializeField
 local CounterObject: GameObject = nil
+
+
+
+
+
 
 --------------------------------
 ------     NETWORKING     ------
@@ -27,6 +33,7 @@ orderRemovedEvent = Event.new("OrderRemovedEvent")
 --------------------------------
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
+
 local function getRandomOrder(): OrdersBase | nil
     if #OrdersList == 0 then
         print("ERROR: No orders in OrdersList!")
@@ -223,5 +230,6 @@ function checkOrderCompleted(player): boolean
             return false
         end
     end
+    
     return true
 end

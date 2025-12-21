@@ -17,6 +17,20 @@ local sittingAnchors: {Anchor} = nil
 local snugglinData: {SnugglinBase} = nil
 
 
+--!SerializeField
+local roomMeterHUD: RoomMeterHUD = nil
+
+
+
+
+local EPIC_TRESHOLD = 200
+local LENDARY_TRESHOLD = 400
+
+local _roomScore = 0
+
+
+
+
 --------------------------------
 ------     LOCAL STATE    ------
 --------------------------------
@@ -25,9 +39,52 @@ local _spawnedSnugglins: {GameObject} = {}
 
 local _seenSnugglins = {}
 
+
 --------------------------------
 ------  LOCAL FUNCTIONS   ------
 --------------------------------
+
+local function GetSnugglingBasedRarity(rarity: string) : {SnugglinBase}
+    local _filteredSnugglins: {SnugglinBase} = {}
+    for _, snugglin in ipairs(snugglinData) do
+        if snugglin.GetRarity() == "Rare" then
+            table.insert(_filteredSnugglins, snugglin)
+        end
+    end
+    if rarity == "Rare" then return _filteredSnugglins end
+
+    for _, snugglin in ipairs(snugglinData) do
+        if snugglin.GetRarity() == "Epic" then
+            table.insert(_filteredSnugglins, snugglin)
+        end
+    end
+    if rarity == "Epic" then return _filteredSnugglins end 
+    for _, snugglin in ipairs(snugglinData) do
+        if snugglin.GetRarity() == "Leg" then
+            table.insert(_filteredSnugglins, snugglin)
+        end
+    end
+    return _filteredSnugglins
+end
+
+function UpdateSnugglinCount(count: number, rarity: string)
+    local _filteredSnugglins = GetSnugglingBasedRarity(rarity)
+    print("Updating snugglin count to: " .. count .. " of rarity: " .. rarity .. " (" .. #_filteredSnugglins .. " available)")
+    
+    if #_spawnedSnugglins > count then -- if we have more snugglins than desired, despawn extras
+        local toDespawn = #_spawnedSnugglins - count
+        for i = 1, toDespawn do
+            WalkBackToSpawnAndDespawn(_spawnedSnugglins[#_spawnedSnugglins])
+        end
+    elseif #_spawnedSnugglins < count then -- if we have less snugglins than desired, spawn more
+        local toSpawn = count - #_spawnedSnugglins
+        for i = 1, toSpawn do
+            local snugglinObject = SpawnAtPosition(rarity)
+            WalkAndSitAtRandomAnchor(snugglinObject)
+        end
+    end
+end
+
 
 local function getCharacterFromGameObject(gameObject: GameObject): Character | nil
     if not gameObject then
@@ -36,10 +93,10 @@ local function getCharacterFromGameObject(gameObject: GameObject): Character | n
     return gameObject:GetComponent(Character)
 end
 
-local function getRandomSnugglinData(): SnugglinBase
-    local _randomIndex = math.random(1, #snugglinData)
-    return snugglinData[_randomIndex]
-end
+-- local function getRandomSnugglinData(): SnugglinBase
+--     local _randomIndex = math.random(1, #snugglinData)
+--     return snugglinData[_randomIndex]
+-- end
 
 local function getRandomSittingAnchor(): Anchor?
     if not sittingAnchors or #sittingAnchors == 0 then
@@ -73,7 +130,7 @@ end
 
 -- Spawns a Snugglin NPC at the specified position
 -- Returns the spawned GameObject
-function SpawnAtPosition(): GameObject | nil
+function SpawnAtPosition(rarity: string): GameObject | nil
     local spawnPos = spawnPointOBJ.transform.position
     if not snugglinPrefab then
         print("ERROR: No snugglinPrefab assigned in SnugglinManager")
@@ -83,7 +140,7 @@ function SpawnAtPosition(): GameObject | nil
     local _spawnedNpc = Object.Instantiate(snugglinPrefab, spawnPos, Quaternion.identity)
     local _character = getCharacterFromGameObject(_spawnedNpc)
     if not _character then return nil end
-    local _snugglinData = getRandomSnugglinData()
+    local _snugglinData = GetSnugglingBasedRarity(rarity)
     if _snugglinData then
         applyOutfitToCharacter(_character, _snugglinData.GetOutfit())
         AddToSeenSnugglins(_snugglinData.GetName())
@@ -201,25 +258,37 @@ function GetAllSpawnedSnugglins(): {GameObject}
 end
 
 function AddToSeenSnugglins(snugglinName: string)
-    _seenSnugglins[snugglinName] = true
+    print("Adding to seen snugglins: " .. snugglinName, _seenSnugglins[snugglinName] == nil)
+
+    if not _seenSnugglins[snugglinName] then 
+        print("Revealing snugglin picture frame: " .. snugglinName)
+        -- grab all the objects with the picture frame tag
+        local pictureFrames = GameObject.FindGameObjectsWithTag("PictureFrame")
+        for _, frame in ipairs(pictureFrames) do
+            print("Checking picture frame: " .. frame.name, frame.name == snugglinName)
+            if frame.name == snugglinName then
+                print("Found picture frame for snugglin: " .. snugglinName)
+                -- turn on all children of the frame to make it visible
+                for i = 0, frame.transform.childCount - 1 do
+                    local child = frame.transform:GetChild(i)
+                    child.gameObject:SetActive(true)
+                end
+                return
+            end
+        end
+        _seenSnugglins[snugglinName] = true
+
+    end 
 end
 
 function HasSeenSnugglin(snugglinName: string): boolean
     return _seenSnugglins[snugglinName] == true
 end
 
+function self:ServerAwake()
+end
+
 
 function self:ClientStart()
-    local snugglinObject = SpawnAtPosition()
-    Timer.After(2, function()
-        WalkAndSitAtRandomAnchor(snugglinObject, function()
-            print("Snugglin arrived and is now sitting!")
-        end)
-    end)
-
-    Timer.After(20, function()
-        WalkBackToSpawnAndDespawn(snugglinObject, function()
-            print("Snugglin has despawned.")
-        end)
-    end)
 end
+

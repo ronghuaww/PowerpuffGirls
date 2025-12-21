@@ -31,6 +31,8 @@ namespace Highrise.Lua.Generated
         [SerializeField] public System.Collections.Generic.List<Highrise.Client.Anchor> m_sittingAnchors = default;
         [LuaScriptPropertyAttribute("b524554a0243acf4fb4bc7a2d97c12b7")]
         [SerializeField] public System.Collections.Generic.List<UnityEngine.Object> m_snugglinData = default;
+        [LuaScriptPropertyAttribute("878647f2b93d26646ac24796f4ae0cdc")]
+        [SerializeField] public UnityEngine.Object m_roomMeterHUD = default;
 
         protected override SerializedPropertyValue[] SerializeProperties()
         {
@@ -43,6 +45,7 @@ namespace Highrise.Lua.Generated
                 CreateSerializedProperty(_script.GetPropertyAt(1), m_spawnPointOBJ),
                 CreateSerializedProperty(_script.GetPropertyAt(2), m_sittingAnchors),
                 CreateSerializedProperty(_script.GetPropertyAt(3), m_snugglinData),
+                CreateSerializedProperty(_script.GetPropertyAt(4), m_roomMeterHUD),
             };
         }
         
